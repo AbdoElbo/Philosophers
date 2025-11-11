@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/11 19:11:37 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/11 19:28:25 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,14 @@ void	routine(void *arg)
 	}
 	while (!philo->vars->death_occured)
 	{
-		philo_eat(philo);
-		philo_sleep(philo, philo->vars->time_to_sleep);
-		philo_think(philo);
+		philo->vars->delta = get_time_in_ms() - philo->vars->start_time;
+		if (philo->vars->delta > 100)
+		{
+			philo_eat(philo);
+			philo_sleep(philo, philo->vars->time_to_sleep);
+			philo_think(philo);
+			philo->vars->delta = 0;
+		}
 	}
 }
 
