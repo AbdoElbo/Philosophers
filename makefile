@@ -6,13 +6,13 @@
 #    By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 16:20:34 by aelbouaz          #+#    #+#              #
-#    Updated: 2025/11/03 18:03:24 by aelbouaz         ###   ########.fr        #
+#    Updated: 2025/11/11 15:44:30 by aelbouaz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CFLAGS = -Wall -Wextra -Werror -pthread -g
 
-PHILOS_SRCS = main.c error_handle.c initialisation.c helper_funcs_1.c
+PHILOS_SRCS = main.c error_handle.c initialisation.c utils_1.c routine.c
 
 PHILOS_OBJ = $(PHILOS_SRCS:.c=.o)
 

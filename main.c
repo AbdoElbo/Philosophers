@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 18:56:40 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/10 18:04:13 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/11 15:57:11 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,24 @@ void	print_status(t_args vars)
 void	routine(void *arg)
 {
 	t_philos	*philo;
+	int			i;
 
+	i = 0;
 	philo = (t_philos *)arg;
-	pthread_mutex_lock(&philo->vars->printf_mutex);
-	printf("philo : %ld\n", philo->vars->philos_num);
-	pthread_mutex_unlock(&philo->vars->printf_mutex);
+	if (i == 0 && !philo->vars->death_occured)
+	{
+		if (philo->state == EATING)
+			philo_eat(philo);
+		else
+			philo_sleep(philo, 10);
+		i++;
+	}
+	while (!philo->vars->death_occured)
+	{
+		philo_eat(philo);
+		philo_sleep(philo, philo->vars->time_to_sleep);
+		philo_think(philo);
+	}
 }
 
 int	main(int argc, char **argv)
@@ -57,10 +70,10 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!initialise_vars_1(&vars, argc, argv) || !initialise_vars_2(&vars)
 		|| !initialise_vars_3(&vars))
-		return (1);
+		return (cleanup(&vars, 0), 1);
 	start_mutexes(&vars);
 	if (!initialise_threads(&vars, routine))
 		return (cleanup(&vars, 1), 1);
-	print_status(vars);
+	// print_status(vars);
 	return (cleanup(&vars, 1), 0);
 }

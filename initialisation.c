@@ -6,12 +6,18 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/10 16:52:59 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:02:32 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
+/// @brief parsing the args and store them in vars
+/// @param vars
+/// @param argc
+/// @param argv
+/// @return always return 1 (because we're calling it in main in an if statement
+///to make the code cleaner)
 int	initialise_vars_1(t_args *vars, int argc, char **argv)
 {
 	vars->philos_num = ft_atol(argv[1]);
@@ -29,26 +35,41 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 		vars->meals_to_eat = -1;
 	vars->start_time = get_time_in_ms();
 	vars->delta = 0;
+	vars->death_occured = 0;
 	return (1);
 }
 
+/// @brief allocates memory for all mutexes and threads
+/// @param vars
+/// @return returns 1 on success, 0 on failure
 int	initialise_vars_2(t_args *vars)
 {
 	vars->monitoring = NULL;
 	vars->philos = NULL;
 	vars->forks = NULL;
+	vars->printf_mutex = NULL;
 	vars->monitoring = malloc(sizeof(pthread_t));
 	if (!vars->monitoring)
-		return (cleanup(vars, 0), 0);
+		return (0);
 	vars->philos = malloc(sizeof(t_philos) * (vars->philos_num + 1));
 	if (!vars->philos)
-		return (cleanup(vars, 0), 0);
+		return (0);
 	vars->forks = malloc(sizeof(t_forks) * vars->forks_num);
 	if (!vars->forks)
-		return (cleanup(vars, 0), 0);
+		return (0);
+	vars->printf_mutex = malloc(sizeof(pthread_mutex_t) * vars->forks_num);
+	if (!vars->printf_mutex)
+		return (0);
+	vars->mutex = malloc(sizeof(pthread_mutex_t) * vars->forks_num);
+	if (!vars->mutex)
+		return (0);
 	return (1);
 }
 
+/// @brief initialising vars for each philo (forks, states,...)
+/// @param vars
+/// @return always return 1 (because we're calling it in main in an if statement
+///to make the code cleaner)
 int	initialise_vars_3(t_args *vars)
 {
 	long	i;

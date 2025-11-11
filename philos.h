@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/11/10 16:50:20 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/11 15:57:00 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,12 @@ typedef struct s_args
 	long			meals_eaten;
 	long			start_sim;
 	long			end_sim;
+	long			death_occured;
 	pthread_t		*monitoring;
 	t_forks			*forks;
 	t_philos		*philos;
-	pthread_mutex_t	printf_mutex;
+	pthread_mutex_t	*printf_mutex;
+	pthread_mutex_t	*mutex;
 	long long		start_time;
 	long long		delta;
 }	t_args;
@@ -98,5 +100,9 @@ void		end_mutexes(t_args *vars);
 
 void		cleanup(t_args *vars, int flag);
 void		print_status(t_args vars);
+
+void		philo_eat(t_philos *philo);
+void		philo_sleep(t_philos *philo, long time);
+void		philo_think(t_philos *philo);
 
 #endif
