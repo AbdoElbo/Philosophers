@@ -6,11 +6,33 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/11 16:03:44 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/11 19:11:37 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
+
+void	routine(void *arg)
+{
+	t_philos	*philo;
+
+	philo = (t_philos *)arg;
+	if (philo->state == EATING)
+		philo_eat(philo);
+	else
+	{
+		philo_sleep(philo, 10);
+		pthread_mutex_lock(&philo->vars->printf_mutex[philo->id]);
+		printf("%ld is IDLE\n", philo->id);
+		pthread_mutex_unlock(&philo->vars->printf_mutex[philo->id]);
+	}
+	while (!philo->vars->death_occured)
+	{
+		philo_eat(philo);
+		philo_sleep(philo, philo->vars->time_to_sleep);
+		philo_think(philo);
+	}
+}
 
 /// @brief
 /// @param philo
@@ -18,8 +40,12 @@ void	philo_eat(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->right_fork->fork);
 	pthread_mutex_lock(&philo->left_fork->fork);
-	sleep(philo->vars->time_to_eat);
+	usleep(philo->vars->time_to_eat);
 	pthread_mutex_lock(&philo->vars->mutex[philo->id]);
+	pthread_mutex_lock(&philo->vars->printf_mutex[philo->id]);
+	printf("%lld ", get_time_in_ms() - philo->vars->start_time);
+	printf("%ld is eating\n", philo->id);
+	pthread_mutex_unlock(&philo->vars->printf_mutex[philo->id]);
 	philo->state = EATING;
 	philo->full = 1;
 	philo->last_meal = get_time_in_ms();
@@ -32,9 +58,13 @@ void	philo_eat(t_philos *philo)
 /// @param philo
 void	philo_sleep(t_philos *philo, long time)
 {
-	usleep(time);
 	pthread_mutex_lock(&philo->vars->mutex[philo->id]);
 	philo->state = SLEEPING;
+	pthread_mutex_lock(&philo->vars->printf_mutex[philo->id]);
+	printf("%lld ", get_time_in_ms() - philo->vars->start_time);
+	printf("%ld is sleeping\n", philo->id);
+	usleep(time);
+	pthread_mutex_unlock(&philo->vars->printf_mutex[philo->id]);
 	pthread_mutex_unlock(&philo->vars->mutex[philo->id]);
 }
 
@@ -44,6 +74,10 @@ void	philo_think(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->vars->mutex[philo->id]);
 	philo->state = THINKING;
+	pthread_mutex_lock(&philo->vars->printf_mutex[philo->id]);
+	printf("%lld ", get_time_in_ms() - philo->vars->start_time);
+	printf("%ld is thinking\n", philo->id);
+	pthread_mutex_unlock(&philo->vars->printf_mutex[philo->id]);
 	pthread_mutex_unlock(&philo->vars->mutex[philo->id]);
 }
 
