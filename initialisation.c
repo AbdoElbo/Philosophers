@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/12 14:24:34 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:34:16 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,27 +75,24 @@ int	initialise_vars_3(t_args *vars)
 	long	i;
 
 	i = 0;
-	while (i < vars->philos_num - 1)
+	while (i < vars->philos_num)
 	{
 		if ((i + 1) % 2 == 0)
 			vars->philos[i].parity = EVEN;
 		else
 			vars->philos[i].parity = ODD;
 		vars->philos[i].right_fork = &vars->forks[i];
-		vars->philos[i].left_fork = &vars->forks[i + 1];
+		if (i == vars->philos_num - 1)
+			vars->philos[i].left_fork = &vars->forks[0];
+		else
+			vars->philos[i].left_fork = &vars->forks[i + 1];
 		vars->philos[i].full = false;
 		vars->philos[i].meal_counter = 0;
 		vars->philos[i].id = i;
 		vars->forks[i].fork_id = i;
 		i++;
 	}
-	vars->philos[i].right_fork = &vars->forks[i];
-	vars->philos[i].left_fork = &vars->forks[0];
-	vars->philos[i].full = false;
-	vars->philos[i].meal_counter = 0;
-	vars->forks[i].fork_id = i;
-	if (vars->philos_num % 2 == 1 && vars->philos_num != 1)
-		vars->philos[vars->philos_num - 1].parity = ODD;
+
 	return (1);
 }
 
