@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/11 16:02:32 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:24:34 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 {
 	vars->philos_num = ft_atol(argv[1]);
 	vars->forks_num = vars->philos_num;
-	vars->time_to_die = ft_atol(argv[2]);
-	vars->time_to_eat = ft_atol(argv[3]);
-	vars->time_to_sleep = ft_atol(argv[4]);
+	vars->time_to_die = ft_atol(argv[2]) * 1000;
+	vars->time_to_eat = ft_atol(argv[3]) * 1000;
+	vars->time_to_sleep = ft_atol(argv[4]) * 1000;
 	if (argc == 6)
 	{
-		vars->meals_to_eat = ft_atol(argv[5]);
+		vars->meals_to_eat = ft_atol(argv[5]) * 1000;
 		if (vars->meals_to_eat == 0)
 			return (0);
 	}
@@ -78,9 +78,9 @@ int	initialise_vars_3(t_args *vars)
 	while (i < vars->philos_num - 1)
 	{
 		if ((i + 1) % 2 == 0)
-			vars->philos[i].state = IDLE;
+			vars->philos[i].parity = EVEN;
 		else
-			vars->philos[i].state = EATING;
+			vars->philos[i].parity = ODD;
 		vars->philos[i].right_fork = &vars->forks[i];
 		vars->philos[i].left_fork = &vars->forks[i + 1];
 		vars->philos[i].full = false;
@@ -95,7 +95,7 @@ int	initialise_vars_3(t_args *vars)
 	vars->philos[i].meal_counter = 0;
 	vars->forks[i].fork_id = i;
 	if (vars->philos_num % 2 == 1 && vars->philos_num != 1)
-		vars->philos[vars->philos_num - 1].state = IDLE;
+		vars->philos[vars->philos_num - 1].parity = ODD;
 	return (1);
 }
 

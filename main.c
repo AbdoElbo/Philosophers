@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 18:56:40 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/11 18:36:52 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:18:37 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,13 @@ void	print_status(t_args vars)
 	printf("\n");
 	while (i < vars.philos_num)
 	{
-		if (vars.philos[i].state == THINKING)
-			printf("status of philo %lu is : THINKING\n", i + 1);
-		if (vars.philos[i].state == IDLE)
-			printf("status of philo %lu is : IDLE\n", i + 1);
-		if (vars.philos[i].state == EATING)
-			printf("status of philo %lu is : EATING\n", i + 1);
-		if (vars.philos[i].state == DEAD)
-			printf("status of philo %lu is : DEAD\n", i + 1);
+		if (vars.philos[i].parity == ODD)
+			printf("Philo %lu is : ODD\n", i + 1);
+		if (vars.philos[i].parity == EVEN)
+			printf("Philo %lu is : EVEN\n", i + 1);
 		i++;
 	}
-	i = 0;
 	printf("\n");
-	while (i < vars.philos_num)
-	{
-		printf("left fork for philo %ld, is %p\n", i, vars.philos[i].left_fork);
-		printf("right fork for philo %ld, is %p\n", i, vars.philos[i].right_fork);
-		i++;
-	}
 }
 
 int	main(int argc, char **argv)
@@ -50,8 +39,8 @@ int	main(int argc, char **argv)
 		|| !initialise_vars_3(&vars))
 		return (cleanup(&vars, 0), 1);
 	start_mutexes(&vars);
+	print_status(vars);
 	if (!initialise_threads(&vars, routine))
 		return (cleanup(&vars, 1), 1);
-	// print_status(vars);
 	return (cleanup(&vars, 1), 0);
 }

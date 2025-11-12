@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/11/11 15:57:00 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:53:08 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 # include <limits.h>
 # include <stdbool.h>
 # include <sys/time.h>
+
+# define R "\033[31m" // Red
+# define G "\033[32m" // Green
+# define Y "\033[33m" // Yellow
+# define B "\033[34m" // Blue
+# define M "\033[35m" // Magenta
+# define C "\033[36m" // Cyan
+# define W "\033[37m" // White
+# define BR "\033[1;31m" // Bold red
+# define RESET "\033[0m"
 
 typedef struct s_args	t_args;
 
@@ -52,6 +62,7 @@ typedef struct s_philos
 {
 	t_args			*vars;
 	long			id;
+	long			priority;
 	pthread_t		th;
 	t_status		state;
 	bool			full;
@@ -102,7 +113,8 @@ void		cleanup(t_args *vars, int flag);
 void		print_status(t_args vars);
 
 void		philo_eat(t_philos *philo);
-void		philo_sleep(t_philos *philo, long time);
+void		philo_sleep(t_philos *philo);
 void		philo_think(t_philos *philo);
+void		philo_standby(t_philos *philo, long time);
 
 #endif
