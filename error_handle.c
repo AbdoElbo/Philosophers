@@ -85,6 +85,6 @@ int	error_handle(int argc, char **argv)
 	if (!is_digit(argc, argv))
 		return (write(2, "Error:\nNon-Digit or Negative.\n", 30), 0);
 	if (bigger_than_int(argc, argv))
-		return (write(2, "Error:\nInt_Overflow.\n", 31), 0);
+		return (write(2, "Error:\nInt_Overflow.\n", 21), 0);
 	return (1);
 }

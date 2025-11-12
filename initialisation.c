@@ -92,7 +92,6 @@ int	initialise_vars_3(t_args *vars)
 		vars->forks[i].fork_id = i;
 		i++;
 	}
-
 	return (1);
 }
 
