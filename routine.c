@@ -6,23 +6,29 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/13 16:13:18 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:50:36 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-void	monitoring_routine(void *arg)
+void	*monitoring_routine(void *arg)
 {
 	t_args	*vars;
 	long	i;
 
 	vars = (t_args *)arg;
+	while (vars->threads_ready == 0)
+		usleep(1);
 	i = 0;
-	while (i < vars->philos_num)
+	while (1 && !vars->death_occured)
 	{
-		vars->delta[i] = get_time_in_ms() - vars->philos[i].last_meal;
-		if (vars->delta[i] > vars->time_to_die)
+		if (i == vars->philos_num)
+			i = 0;
+		vars->delta[i] = (get_time_in_ms() - vars->philos[i].last_meal);
+		printf(M"vars->delta[%ld] is %lld"RESET "\n",i, vars->delta[i]);
+		printf(M"vars->time_to_die is %ld"RESET "\n",vars->time_to_die / 1000);
+		if (vars->delta[i] >= vars->time_to_die / 1000)
 		{
 			pthread_mutex_lock(&vars->monitor_mutex);
 			vars->philos[i].state = DEAD;
@@ -31,22 +37,26 @@ void	monitoring_routine(void *arg)
 				vars->philos[i].id);
 			pthread_mutex_unlock(&vars->monitor_mutex);
 		}
+		i++;
 	}
+	return (NULL);
 }
 
-void	routine(void *arg)
+void	*philo_routine(void *arg)
 {
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
+	philo->vars->threads_ready = 1;
 	if (philo->parity == ODD)
 		usleep(philo->vars->time_to_eat / 2);
-	while (!philo->vars->death_occured)
+	while (philo->vars->threads_ready && !philo->vars->death_occured)
 	{
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
 	}
+	return (NULL);
 }
 
 void	philo_eat(t_philos *philo)

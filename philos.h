@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/11/13 16:03:26 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:25:13 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ typedef struct s_args
 	long			time_to_sleep;
 	long			meals_to_eat;
 	long			meals_eaten;
-	long			start_sim;
-	long			end_sim;
+	long			threads_ready;
 	long			death_occured;
 	pthread_t		monitoring;
 	t_forks			*forks;
@@ -99,13 +98,14 @@ int			error_handle(int argc, char **argv);
 long		ft_atol(const char *str);
 long long	get_time_in_ms(void);
 
-void		routine(void *arg);
-void		monitoring_routine(void *arg);
+void		*philo_routine(void *arg);
+void		*monitoring_routine(void *arg);
 
 int			initialise_vars_1(t_args *vars, int argc, char **argv);
 int			initialise_vars_2(t_args *vars);
 int			initialise_vars_3(t_args *vars);
-int			initialise_threads(t_args *vars, void (routine)(void *arg));
+int			initialise_threads(t_args *vars, void *(routine)(void *arg),
+				void *(monitoring_routine)(void *arg));
 
 
 void		start_mutexes(t_args *vars);

@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/13 16:10:48 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:43:10 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 	vars->start_time = get_time_in_ms();
 	vars->delta = 0;
 	vars->death_occured = 0;
+	vars->threads_ready = 0;
 	return (1);
 }
 
@@ -62,7 +63,7 @@ int	initialise_vars_2(t_args *vars)
 	vars->mutex = malloc(sizeof(pthread_mutex_t) * vars->forks_num);
 	if (!vars->mutex)
 		return (0);
-	vars->delta = malloc(sizeof(int) * vars->forks_num);
+	vars->delta = malloc(sizeof(long) * vars->forks_num);
 	if (!vars->delta)
 		return (0);
 	while (i < vars->forks_num)
@@ -92,6 +93,7 @@ int	initialise_vars_3(t_args *vars)
 			vars->philos[i].left_fork = &vars->forks[i + 1];
 		vars->philos[i].full = false;
 		vars->philos[i].meal_counter = 0;
+		vars->philos[i].last_meal = vars->start_time;
 		vars->philos[i].id = i;
 		vars->forks[i].fork_id = i;
 		i++;
@@ -99,22 +101,23 @@ int	initialise_vars_3(t_args *vars)
 	return (1);
 }
 
-int	initialise_threads(t_args *vars, void (routine)(void *arg))
+int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
+		, void *(monitoring_routine)(void *arg))
 {
 	long	i;
 
 	i = 0;
-	if (pthread_create(&vars->monitoring, NULL
-			, (void *)monitoring_routine, &vars))
-		return (cleanup(vars, 1), 0);
 	while (i < vars->philos_num)
 	{
 		vars->philos[i].vars = vars;
 		if (pthread_create(&vars->philos[i].th, NULL
-				, (void *)routine, &vars->philos[i]))
+				, philo_routine, &vars->philos[i]))
 			return (cleanup(vars, 1), 0);
 		i++;
 	}
+	if (pthread_create(&vars->monitoring, NULL
+			, monitoring_routine, vars))
+		return (cleanup(vars, 1), 0);
 	i = 0;
 	while (i < vars->philos_num)
 	{
