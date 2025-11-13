@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 18:56:40 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/12 14:18:37 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:12:29 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ void	print_status(t_args vars)
 			printf("Philo %lu is : EVEN\n", i + 1);
 		i++;
 	}
+	// i = 0;
+	// printf("\n");
+	// while (i < vars.philos_num)
+	// {
+	// 	printf("delta is :%llu\n", vars.delta[i]);
+	// 	i++;
+	// }
 	printf("\n");
 }
 

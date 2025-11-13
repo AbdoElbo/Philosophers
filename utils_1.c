@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper_funcs_1.c                                   :+:      :+:    :+:   */
+/*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/11 15:07:21 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/13 15:27:44 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,9 @@ void	cleanup(t_args *vars, int flag)
 		free(vars->philos);
 	if (vars->forks)
 		free(vars->forks);
-	if (vars->monitoring)
-		free(vars->monitoring);
 	if (vars->printf_mutex)
 		free(vars->printf_mutex);
 	vars->printf_mutex = NULL;
 	vars->philos = NULL;
-	vars->monitoring = NULL;
 	vars->forks = NULL;
 }

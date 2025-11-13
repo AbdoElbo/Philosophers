@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/12 17:34:16 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:10:48 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,12 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 /// @return returns 1 on success, 0 on failure
 int	initialise_vars_2(t_args *vars)
 {
-	vars->monitoring = NULL;
+	long	i;
+
+	i = 0;
 	vars->philos = NULL;
 	vars->forks = NULL;
 	vars->printf_mutex = NULL;
-	vars->monitoring = malloc(sizeof(pthread_t));
-	if (!vars->monitoring)
-		return (0);
 	vars->philos = malloc(sizeof(t_philos) * (vars->philos_num + 1));
 	if (!vars->philos)
 		return (0);
@@ -63,6 +62,11 @@ int	initialise_vars_2(t_args *vars)
 	vars->mutex = malloc(sizeof(pthread_mutex_t) * vars->forks_num);
 	if (!vars->mutex)
 		return (0);
+	vars->delta = malloc(sizeof(int) * vars->forks_num);
+	if (!vars->delta)
+		return (0);
+	while (i < vars->forks_num)
+		vars->delta[i++] = 0;
 	return (1);
 }
 
@@ -100,6 +104,9 @@ int	initialise_threads(t_args *vars, void (routine)(void *arg))
 	long	i;
 
 	i = 0;
+	if (pthread_create(&vars->monitoring, NULL
+			, (void *)monitoring_routine, &vars))
+		return (cleanup(vars, 1), 0);
 	while (i < vars->philos_num)
 	{
 		vars->philos[i].vars = vars;
@@ -115,6 +122,8 @@ int	initialise_threads(t_args *vars, void (routine)(void *arg))
 			return (cleanup(vars, 1), 0);
 		i++;
 	}
+	if (pthread_join(vars->monitoring, NULL))
+		return (cleanup(vars, 1), 0);
 	return (1);
 }
 

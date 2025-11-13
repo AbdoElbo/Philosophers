@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/11/12 14:53:08 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:03:26 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,14 @@ typedef struct s_args
 	long			start_sim;
 	long			end_sim;
 	long			death_occured;
-	pthread_t		*monitoring;
+	pthread_t		monitoring;
 	t_forks			*forks;
 	t_philos		*philos;
 	pthread_mutex_t	*printf_mutex;
 	pthread_mutex_t	*mutex;
+	pthread_mutex_t	monitor_mutex;
 	long long		start_time;
-	long long		delta;
+	long long		*delta;
 }	t_args;
 
 int			error_handle(int argc, char **argv);
@@ -99,6 +100,7 @@ long		ft_atol(const char *str);
 long long	get_time_in_ms(void);
 
 void		routine(void *arg);
+void		monitoring_routine(void *arg);
 
 int			initialise_vars_1(t_args *vars, int argc, char **argv);
 int			initialise_vars_2(t_args *vars);
@@ -115,6 +117,5 @@ void		print_status(t_args vars);
 void		philo_eat(t_philos *philo);
 void		philo_sleep(t_philos *philo);
 void		philo_think(t_philos *philo);
-void		philo_standby(t_philos *philo, long time);
 
 #endif

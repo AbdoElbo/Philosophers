@@ -6,23 +6,41 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/12 17:32:42 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:13:18 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
+
+void	monitoring_routine(void *arg)
+{
+	t_args	*vars;
+	long	i;
+
+	vars = (t_args *)arg;
+	i = 0;
+	while (i < vars->philos_num)
+	{
+		vars->delta[i] = get_time_in_ms() - vars->philos[i].last_meal;
+		if (vars->delta[i] > vars->time_to_die)
+		{
+			pthread_mutex_lock(&vars->monitor_mutex);
+			vars->philos[i].state = DEAD;
+			vars->death_occured = 1;
+			printf(R"LOL, philo %ld Died, F's in the Chat"RESET "\n",
+				vars->philos[i].id);
+			pthread_mutex_unlock(&vars->monitor_mutex);
+		}
+	}
+}
 
 void	routine(void *arg)
 {
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
-	// if (philo->parity == ODD)
-	// {
-	// 	pthread_mutex_lock(philo->vars->mutex);
-	// 	usleep(philo->vars->time_to_eat - 1000);
-	// 	pthread_mutex_unlock(philo->vars->mutex);
-	// }
+	if (philo->parity == ODD)
+		usleep(philo->vars->time_to_eat / 2);
 	while (!philo->vars->death_occured)
 	{
 		philo_eat(philo);
