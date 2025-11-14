@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/11/13 18:25:13 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/14 14:56:02 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,14 @@ typedef struct s_args
 	long			meals_eaten;
 	long			threads_ready;
 	long			death_occured;
+	long			threads;
 	pthread_t		monitoring;
 	t_forks			*forks;
 	t_philos		*philos;
 	pthread_mutex_t	*printf_mutex;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	monitor_mutex;
+	pthread_mutex_t	start_sim;
 	long long		start_time;
 	long long		*delta;
 }	t_args;

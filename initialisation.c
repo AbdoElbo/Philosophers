@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/13 18:43:10 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/14 15:13:42 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 	vars->delta = 0;
 	vars->death_occured = 0;
 	vars->threads_ready = 0;
+	vars->threads = 0;
 	return (1);
 }
 
@@ -63,7 +64,7 @@ int	initialise_vars_2(t_args *vars)
 	vars->mutex = malloc(sizeof(pthread_mutex_t) * vars->forks_num);
 	if (!vars->mutex)
 		return (0);
-	vars->delta = malloc(sizeof(long) * vars->forks_num);
+	vars->delta = malloc(sizeof(long long) * vars->forks_num);
 	if (!vars->delta)
 		return (0);
 	while (i < vars->forks_num)

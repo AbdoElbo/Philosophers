@@ -6,11 +6,11 @@
 #    By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 16:20:34 by aelbouaz          #+#    #+#              #
-#    Updated: 2025/11/11 15:44:30 by aelbouaz         ###   ########.fr        #
+#    Updated: 2025/11/14 15:20:03 by aelbouaz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror -pthread -g
+CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
 
 PHILOS_SRCS = main.c error_handle.c initialisation.c utils_1.c routine.c
 

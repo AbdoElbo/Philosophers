@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/13 18:50:36 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/14 15:17:08 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,20 @@ void	*monitoring_routine(void *arg)
 	vars = (t_args *)arg;
 	while (vars->threads_ready == 0)
 		usleep(1);
+	pthread_mutex_lock(&vars->start_sim);
+	vars->start_time = get_time_in_ms();
+	pthread_mutex_unlock(&vars->start_sim);
 	i = 0;
-	while (1 && !vars->death_occured)
+	while (!vars->death_occured)
 	{
 		if (i == vars->philos_num)
 			i = 0;
 		vars->delta[i] = (get_time_in_ms() - vars->philos[i].last_meal);
-		printf(M"vars->delta[%ld] is %lld"RESET "\n",i, vars->delta[i]);
-		printf(M"vars->time_to_die is %ld"RESET "\n",vars->time_to_die / 1000);
+		printf(M"%lld delta[%ld] is %lld"RESET "\n",
+			get_time_in_ms() - vars->start_time, i, vars->delta[i]);
 		if (vars->delta[i] >= vars->time_to_die / 1000)
 		{
 			pthread_mutex_lock(&vars->monitor_mutex);
-			vars->philos[i].state = DEAD;
 			vars->death_occured = 1;
 			printf(R"LOL, philo %ld Died, F's in the Chat"RESET "\n",
 				vars->philos[i].id);
@@ -47,10 +49,16 @@ void	*philo_routine(void *arg)
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
-	philo->vars->threads_ready = 1;
+	pthread_mutex_lock(&philo->vars->start_sim);
+	philo->vars->threads++;
+	if (philo->vars->threads == philo->vars->philos_num)
+		philo->vars->threads_ready = 1;
+	pthread_mutex_unlock(&philo->vars->start_sim);
+	while (philo->vars->threads_ready == 0)
+		usleep(1);
 	if (philo->parity == ODD)
 		usleep(philo->vars->time_to_eat / 2);
-	while (philo->vars->threads_ready && !philo->vars->death_occured)
+	while (!philo->vars->death_occured)
 	{
 		philo_eat(philo);
 		philo_sleep(philo);

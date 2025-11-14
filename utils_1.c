@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/13 18:48:57 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/14 15:11:26 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	start_mutexes(t_args *vars)
 	}
 	pthread_mutex_init(vars->mutex, NULL);
 	pthread_mutex_init(&vars->monitor_mutex, NULL);
+	pthread_mutex_init(&vars->start_sim, NULL);
 }
 
 void	end_mutexes(t_args *vars)
@@ -40,6 +41,7 @@ void	end_mutexes(t_args *vars)
 	}
 	pthread_mutex_destroy(vars->mutex);
 	pthread_mutex_destroy(&vars->monitor_mutex);
+	pthread_mutex_destroy(&vars->start_sim);
 }
 
 void	cleanup(t_args *vars, int flag)
