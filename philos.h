@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/11/14 14:56:02 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/14 19:37:39 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 # include <stdbool.h>
 # include <sys/time.h>
 
-# define R "\033[31m" // Red
-# define G "\033[32m" // Green
-# define Y "\033[33m" // Yellow
-# define B "\033[34m" // Blue
-# define M "\033[35m" // Magenta
-# define C "\033[36m" // Cyan
-# define W "\033[37m" // White
+# define R "\033[1;31m" // Red
+# define G "\033[1;32m" // Green
+# define Y "\033[1;33m" // Yellow
+# define B "\033[1;34m" // Blue
+# define M "\033[1;35m" // Magenta
+# define C "\033[1;36m" // Cyan
+# define W "\033[1;37m" // White
 # define BR "\033[1;31m" // Bold red
 # define RESET "\033[0m"
 

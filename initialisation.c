@@ -6,18 +6,12 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/14 15:13:42 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/14 19:33:39 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-/// @brief parsing the args and store them in vars
-/// @param vars
-/// @param argc
-/// @param argv
-/// @return always return 1 (because we're calling it in main in an if statement
-///to make the code cleaner)
 int	initialise_vars_1(t_args *vars, int argc, char **argv)
 {
 	vars->philos_num = ft_atol(argv[1]);
@@ -41,9 +35,6 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 	return (1);
 }
 
-/// @brief allocates memory for all mutexes and threads
-/// @param vars
-/// @return returns 1 on success, 0 on failure
 int	initialise_vars_2(t_args *vars)
 {
 	long	i;
@@ -72,10 +63,6 @@ int	initialise_vars_2(t_args *vars)
 	return (1);
 }
 
-/// @brief initialising vars for each philo (forks, states,...)
-/// @param vars
-/// @return always return 1 (because we're calling it in main in an if statement
-///to make the code cleaner)
 int	initialise_vars_3(t_args *vars)
 {
 	long	i;
@@ -108,7 +95,7 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 	long	i;
 
 	i = 0;
-	while (i < vars->philos_num)
+	while (i < vars->philos_num - 1)
 	{
 		vars->philos[i].vars = vars;
 		if (pthread_create(&vars->philos[i].th, NULL

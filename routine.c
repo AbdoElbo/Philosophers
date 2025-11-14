@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/14 15:17:08 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/14 19:32:59 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ void	*monitoring_routine(void *arg)
 	long	i;
 
 	vars = (t_args *)arg;
-	while (vars->threads_ready == 0)
-		usleep(1);
-	pthread_mutex_lock(&vars->start_sim);
 	vars->start_time = get_time_in_ms();
-	pthread_mutex_unlock(&vars->start_sim);
 	i = 0;
 	while (!vars->death_occured)
 	{
@@ -49,13 +45,6 @@ void	*philo_routine(void *arg)
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
-	pthread_mutex_lock(&philo->vars->start_sim);
-	philo->vars->threads++;
-	if (philo->vars->threads == philo->vars->philos_num)
-		philo->vars->threads_ready = 1;
-	pthread_mutex_unlock(&philo->vars->start_sim);
-	while (philo->vars->threads_ready == 0)
-		usleep(1);
 	if (philo->parity == ODD)
 		usleep(philo->vars->time_to_eat / 2);
 	while (!philo->vars->death_occured)
