@@ -92,7 +92,7 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 	long	i;
 
 	i = 0;
-	while (i < vars->philos_num - 1)
+	while (i < vars->philos_num)
 	{
 		vars->philos[i].vars = vars;
 		if (pthread_create(&vars->philos[i].th, NULL
@@ -100,13 +100,13 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 			return (cleanup(vars, 1), 0);
 		i++;
 	}
-	if (pthread_create(&vars->monitoring, NULL
-		, monitoring_routine, vars))
-		return (cleanup(vars, 1), 0);
 	vars->start_time = get_time_in_ms();
 	for (int i = 0; i < vars->philos_num; i++)
 		vars->philos[i].last_meal = vars->start_time;
-	set_long(vars->mutex, &vars->threads_ready, 1);
+	set_long(&vars->mutex[0], &vars->threads_ready, 1);
+	if (pthread_create(&vars->monitoring, NULL
+		, monitoring_routine, vars))
+		return (cleanup(vars, 1), 0);
 	i = 0;
 	while (i < vars->philos_num)
 	{

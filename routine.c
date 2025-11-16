@@ -18,7 +18,7 @@ void	*monitoring_routine(void *arg)
 	long	i;
 
 	vars = (t_args *)arg;
-	while (!(get_long(vars->mutex, &vars->threads_ready)))
+	while (!(get_long(&vars->mutex[0], &vars->threads_ready)))
 		usleep(1);
 	i = 0;
 	while (!vars->death_occured)
@@ -26,9 +26,9 @@ void	*monitoring_routine(void *arg)
 		if (i == vars->philos_num)
 			i = 0;
 		vars->delta[i] = (get_time_in_ms() - vars->philos[i].last_meal);
-		printf(M"%lld delta[%ld] is %lld"RESET "\n",
-			get_time_in_ms() - vars->start_time, i, vars->delta[i]);
-		if (vars->delta[i] >= vars->time_to_die / 1000)
+		// printf(M"%lld delta[%ld] is %lld"RESET "\n",
+		// 	get_time_in_ms() - vars->start_time, i, vars->delta[i]);
+		if (vars->delta[i] >= vars->time_to_die)
 		{
 			pthread_mutex_lock(&vars->monitor_mutex);
 			vars->death_occured = 1;
@@ -46,7 +46,7 @@ void	*philo_routine(void *arg)
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
-	while (!(get_long(philo->vars->mutex, &philo->vars->threads_ready)))
+	while (!(get_long(&philo->vars->mutex[0], &philo->vars->threads_ready)))
 		usleep(1);
 	if (philo->parity == ODD)
 		usleep(philo->vars->time_to_eat / 2);
