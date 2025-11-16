@@ -60,3 +60,29 @@ void	cleanup(t_args *vars, int flag)
 	vars->philos = NULL;
 	vars->forks = NULL;
 }
+
+long long	get_time_in_ms(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) != 0)
+		return (-1);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+/// @brief safely return the value of dst
+long    get_long(pthread_mutex_t *mutex ,long *dst)
+{
+	long	number;
+
+	pthread_mutex_lock(mutex);
+	number = *dst;
+	pthread_mutex_unlock(mutex);
+	return (number);
+}
+/// @brief safely set "dst" to "Updated" 
+void    set_long(pthread_mutex_t *mutex , long *dst, long updated)
+{
+	pthread_mutex_lock(mutex);
+	*dst = updated;
+	pthread_mutex_unlock(mutex);
+}

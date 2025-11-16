@@ -30,7 +30,7 @@
 # define M "\033[1;35m" // Magenta
 # define C "\033[1;36m" // Cyan
 # define W "\033[1;37m" // White
-# define BR "\033[1;31m" // Bold red
+# define R "\033[1;31m" // Bold red
 # define RESET "\033[0m"
 
 typedef struct s_args	t_args;
@@ -99,6 +99,8 @@ typedef struct s_args
 int			error_handle(int argc, char **argv);
 long		ft_atol(const char *str);
 long long	get_time_in_ms(void);
+long    	get_long(pthread_mutex_t *mutex ,long *dst);
+void  		set_long(pthread_mutex_t *mutex , long *dst, long updated);
 
 void		*philo_routine(void *arg);
 void		*monitoring_routine(void *arg);

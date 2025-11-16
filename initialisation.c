@@ -27,8 +27,6 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 	}
 	else
 		vars->meals_to_eat = -1;
-	vars->start_time = get_time_in_ms();
-	vars->delta = 0;
 	vars->death_occured = 0;
 	vars->threads_ready = 0;
 	vars->threads = 0;
@@ -43,7 +41,7 @@ int	initialise_vars_2(t_args *vars)
 	vars->philos = NULL;
 	vars->forks = NULL;
 	vars->printf_mutex = NULL;
-	vars->philos = malloc(sizeof(t_philos) * (vars->philos_num + 1));
+	vars->philos = malloc(sizeof(t_philos) * (vars->philos_num));
 	if (!vars->philos)
 		return (0);
 	vars->forks = malloc(sizeof(t_forks) * vars->forks_num);
@@ -81,7 +79,6 @@ int	initialise_vars_3(t_args *vars)
 			vars->philos[i].left_fork = &vars->forks[i + 1];
 		vars->philos[i].full = false;
 		vars->philos[i].meal_counter = 0;
-		vars->philos[i].last_meal = vars->start_time;
 		vars->philos[i].id = i;
 		vars->forks[i].fork_id = i;
 		i++;
@@ -104,8 +101,12 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 		i++;
 	}
 	if (pthread_create(&vars->monitoring, NULL
-			, monitoring_routine, vars))
+		, monitoring_routine, vars))
 		return (cleanup(vars, 1), 0);
+	vars->start_time = get_time_in_ms();
+	for (int i = 0; i < vars->philos_num; i++)
+		vars->philos[i].last_meal = vars->start_time;
+	set_long(vars->mutex, &vars->threads_ready, 1);
 	i = 0;
 	while (i < vars->philos_num)
 	{
@@ -118,11 +119,3 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 	return (1);
 }
 
-long long	get_time_in_ms(void)
-{
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL) != 0)
-		return (-1);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}

@@ -18,7 +18,8 @@ void	*monitoring_routine(void *arg)
 	long	i;
 
 	vars = (t_args *)arg;
-	vars->start_time = get_time_in_ms();
+	while (!(get_long(vars->mutex, &vars->threads_ready)))
+		usleep(1);
 	i = 0;
 	while (!vars->death_occured)
 	{
@@ -31,7 +32,7 @@ void	*monitoring_routine(void *arg)
 		{
 			pthread_mutex_lock(&vars->monitor_mutex);
 			vars->death_occured = 1;
-			printf(R"LOL, philo %ld Died, F's in the Chat"RESET "\n",
+			printf(R "LOL, philo %ld Died, Fs in the Chat"RESET "\n",
 				vars->philos[i].id);
 			pthread_mutex_unlock(&vars->monitor_mutex);
 		}
@@ -45,6 +46,8 @@ void	*philo_routine(void *arg)
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
+	while (!(get_long(philo->vars->mutex, &philo->vars->threads_ready)))
+		usleep(1);
 	if (philo->parity == ODD)
 		usleep(philo->vars->time_to_eat / 2);
 	while (!philo->vars->death_occured)
