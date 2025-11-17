@@ -65,7 +65,7 @@ typedef struct s_philos
 	long			priority;
 	pthread_t		th;
 	t_status		state;
-	bool			full;
+	long			full;
 	long			meal_counter;
 	long			last_meal;
 	t_forks			*right_fork;
@@ -88,10 +88,11 @@ typedef struct s_args
 	pthread_t		monitoring;
 	t_forks			*forks;
 	t_philos		*philos;
-	pthread_mutex_t	*printf_mutex;
-	pthread_mutex_t	*mutex;
+	pthread_mutex_t	printf_mutex;
+	pthread_mutex_t	philo_mutex;
 	pthread_mutex_t	monitor_mutex;
-	pthread_mutex_t	start_sim;
+	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	set_read_mutex;
 	long long		start_time;
 	long long		*delta;
 }	t_args;

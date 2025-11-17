@@ -26,6 +26,9 @@ void	print_status(t_args vars)
 			printf("Philo %lu is : EVEN\n", i + 1);
 		i++;
 	}
+	printf("time to die is %lu\n", vars.time_to_die);
+	printf("time to eat is %lu\n", vars.time_to_eat);
+	printf("time to sleep is %lu\n", vars.time_to_sleep);
 	printf("\n");
 }
 

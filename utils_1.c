@@ -19,13 +19,14 @@ void	start_mutexes(t_args *vars)
 	i = 0;
 	while (i < vars->philos_num)
 	{
-		pthread_mutex_init(&vars->printf_mutex[i], NULL);
 		pthread_mutex_init(&vars->forks[i].fork, NULL);
 		i++;
 	}
-	pthread_mutex_init(vars->mutex, NULL);
+	pthread_mutex_init(&vars->philo_mutex, NULL);
+	pthread_mutex_init(&vars->printf_mutex, NULL);
 	pthread_mutex_init(&vars->monitor_mutex, NULL);
-	pthread_mutex_init(&vars->start_sim, NULL);
+	pthread_mutex_init(&vars->dead_mutex, NULL);
+	pthread_mutex_init(&vars->set_read_mutex, NULL);
 }
 
 void	end_mutexes(t_args *vars)
@@ -35,13 +36,14 @@ void	end_mutexes(t_args *vars)
 	i = 0;
 	while (i < vars->philos_num)
 	{
-		pthread_mutex_destroy(&vars->printf_mutex[i]);
 		pthread_mutex_destroy(&vars->forks[i].fork);
 		i++;
 	}
-	pthread_mutex_destroy(vars->mutex);
+	pthread_mutex_destroy(&vars->printf_mutex);
+	pthread_mutex_destroy(&vars->philo_mutex);
 	pthread_mutex_destroy(&vars->monitor_mutex);
-	pthread_mutex_destroy(&vars->start_sim);
+	pthread_mutex_destroy(&vars->dead_mutex);
+	pthread_mutex_destroy(&vars->set_read_mutex);
 }
 
 void	cleanup(t_args *vars, int flag)
@@ -54,9 +56,6 @@ void	cleanup(t_args *vars, int flag)
 		free(vars->philos);
 	if (vars->forks)
 		free(vars->forks);
-	if (vars->printf_mutex)
-		free(vars->printf_mutex);
-	vars->printf_mutex = NULL;
 	vars->philos = NULL;
 	vars->forks = NULL;
 }

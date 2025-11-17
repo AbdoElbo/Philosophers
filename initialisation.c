@@ -16,12 +16,12 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 {
 	vars->philos_num = ft_atol(argv[1]);
 	vars->forks_num = vars->philos_num;
-	vars->time_to_die = ft_atol(argv[2]) * 1000;
-	vars->time_to_eat = ft_atol(argv[3]) * 1000;
-	vars->time_to_sleep = ft_atol(argv[4]) * 1000;
+	vars->time_to_die = ft_atol(argv[2]);
+	vars->time_to_eat = ft_atol(argv[3]);
+	vars->time_to_sleep = ft_atol(argv[4]);
 	if (argc == 6)
 	{
-		vars->meals_to_eat = ft_atol(argv[5]) * 1000;
+		vars->meals_to_eat = ft_atol(argv[5]);
 		if (vars->meals_to_eat == 0)
 			return (0);
 	}
@@ -40,18 +40,11 @@ int	initialise_vars_2(t_args *vars)
 	i = 0;
 	vars->philos = NULL;
 	vars->forks = NULL;
-	vars->printf_mutex = NULL;
 	vars->philos = malloc(sizeof(t_philos) * (vars->philos_num));
 	if (!vars->philos)
 		return (0);
 	vars->forks = malloc(sizeof(t_forks) * vars->forks_num);
 	if (!vars->forks)
-		return (0);
-	vars->printf_mutex = malloc(sizeof(pthread_mutex_t) * vars->forks_num);
-	if (!vars->printf_mutex)
-		return (0);
-	vars->mutex = malloc(sizeof(pthread_mutex_t) * vars->forks_num);
-	if (!vars->mutex)
 		return (0);
 	vars->delta = malloc(sizeof(long long) * vars->forks_num);
 	if (!vars->delta)
@@ -103,7 +96,7 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 	vars->start_time = get_time_in_ms();
 	for (int i = 0; i < vars->philos_num; i++)
 		vars->philos[i].last_meal = vars->start_time;
-	set_long(&vars->mutex[0], &vars->threads_ready, 1);
+	set_long(&vars->set_read_mutex, &vars->threads_ready, 1);
 	if (pthread_create(&vars->monitoring, NULL
 		, monitoring_routine, vars))
 		return (cleanup(vars, 1), 0);
