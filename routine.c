@@ -48,6 +48,7 @@ void	*philo_routine(void *arg)
 	philo = (t_philos *)arg;
 	while (!(get_long(&philo->vars->set_read_mutex, &philo->vars->threads_ready)))
 		usleep(1);
+	philo->last_meal = philo->vars->start_time;
 	if (philo->parity == ODD)
 		usleep((philo->vars->time_to_eat * 1000) / 2);
 	while (!(get_long(&philo->vars->philo_mutex, &philo->vars->death_occured)))

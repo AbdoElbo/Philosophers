@@ -23,14 +23,14 @@
 # include <stdbool.h>
 # include <sys/time.h>
 
-# define R "\033[1;31m" // Red
-# define G "\033[1;32m" // Green
-# define Y "\033[1;33m" // Yellow
-# define B "\033[1;34m" // Blue
-# define M "\033[1;35m" // Magenta
-# define C "\033[1;36m" // Cyan
-# define W "\033[1;37m" // White
-# define R "\033[1;31m" // Bold red
+# define R "\033[1;31m"
+# define G "\033[1;32m"
+# define Y "\033[1;33m"
+# define B "\033[1;34m"
+# define M "\033[1;35m"
+# define C "\033[1;36m"
+# define W "\033[1;37m"
+# define R "\033[1;31m"
 # define RESET "\033[0m"
 
 typedef struct s_args	t_args;
@@ -40,17 +40,6 @@ typedef enum s_parity
 	EVEN,
 	ODD,
 }	t_parity;
-
-typedef enum s_status
-{
-	IDLE,
-	SLEEPING,
-	THINKING,
-	TOOK_FIRST_FORK,
-	TOOK_SECOND_FORK,
-	EATING,
-	DEAD,
-}	t_status;
 
 typedef struct s_forks
 {
@@ -64,7 +53,6 @@ typedef struct s_philos
 	long			id;
 	long			priority;
 	pthread_t		th;
-	t_status		state;
 	long			full;
 	long			meal_counter;
 	long			last_meal;
@@ -75,14 +63,12 @@ typedef struct s_philos
 
 typedef struct s_args
 {
-	int				cleanup_flag;
 	long			philos_num;
 	long			forks_num;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			meals_to_eat;
-	long			meals_eaten;
 	long			threads_ready;
 	long			death_occured;
 	pthread_t		monitoring;
@@ -94,6 +80,7 @@ typedef struct s_args
 	pthread_mutex_t	set_read_mutex;
 	long long		start_time;
 	long long		*delta;
+	int				cleanup_flag;
 }	t_args;
 
 int			error_handle(int argc, char **argv);
@@ -101,9 +88,9 @@ long		ft_atol(const char *str);
 long long	get_time_in_ms(void);
 long    	get_long(pthread_mutex_t *mutex ,long *dst);
 void  		set_long(pthread_mutex_t *mutex , long *dst, long updated);
-
-void		*philo_routine(void *arg);
-void		*monitoring_routine(void *arg);
+void		start_mutexes(t_args *vars);
+void		end_mutexes(t_args *vars);
+void		cleanup(t_args *vars);
 
 int			initialise_vars_1(t_args *vars, int argc, char **argv);
 int			initialise_vars_2(t_args *vars);
@@ -111,12 +98,8 @@ int			initialise_vars_3(t_args *vars);
 int			initialise_threads(t_args *vars, void *(routine)(void *arg),
 				void *(monitoring_routine)(void *arg));
 
-
-void		start_mutexes(t_args *vars);
-void		end_mutexes(t_args *vars);
-
-void		cleanup(t_args *vars);
-void		print_status(t_args vars);
+void		*philo_routine(void *arg);
+void		*monitoring_routine(void *arg);
 
 void		philo_eat(t_philos *philo);
 void		philo_sleep(t_philos *philo);
