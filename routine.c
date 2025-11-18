@@ -43,22 +43,22 @@ void	*monitoring_routine(void *arg)
 
 void	*philo_routine(void *arg)
 {
-	t_philos	*philo;
+	t_philos	*ph;
 
-	philo = (t_philos *)arg;
-	while (!(get_long(&philo->vars->set_read_mutex, &philo->vars->threads_ready)))
+	ph = (t_philos *)arg;
+	while (!(get_long(&ph->vars->set_read_mutex, &ph->vars->threads_ready)))
 		usleep(1);
-	philo->last_meal = philo->vars->start_time;
-	if (philo->parity == ODD)
-		usleep((philo->vars->time_to_eat * 1000) / 2);
-	while (!(get_long(&philo->vars->philo_mutex, &philo->vars->death_occured)))
+	ph->last_meal = ph->vars->start_time;
+	if (ph->parity == ODD)
+		usleep((ph->vars->time_to_eat * 1000) / 2);
+	while (!(get_long(&ph->vars->philo_mutex, &ph->vars->death_occured)))
 	{
-		if (!(get_long(&philo->vars->philo_mutex, &philo->vars->death_occured)))
-			philo_eat(philo);
-		if (!(get_long(&philo->vars->philo_mutex, &philo->vars->death_occured)))
-			philo_sleep(philo);
-		if (!(get_long(&philo->vars->philo_mutex, &philo->vars->death_occured)))
-			philo_think(philo);
+		if (!(get_long(&ph->vars->philo_mutex, &ph->vars->death_occured)))
+			philo_eat(ph);
+		if (!(get_long(&ph->vars->philo_mutex, &ph->vars->death_occured)))
+			philo_sleep(ph);
+		if (!(get_long(&ph->vars->philo_mutex, &ph->vars->death_occured)))
+			philo_think(ph);
 	}
 	return (NULL);
 }

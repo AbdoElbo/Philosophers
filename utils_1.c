@@ -44,22 +44,6 @@ void	end_mutexes(t_args *vars)
 	pthread_mutex_destroy(&vars->monitor_mutex);
 	pthread_mutex_destroy(&vars->set_read_mutex);
 }
-void	cleanup(t_args *vars)
-{
-	if (!vars)
-		return ;
-	if (vars->cleanup_flag == 1)
-		end_mutexes(vars);
-	if (vars->philos)
-		free(vars->philos);
-	if (vars->forks)
-		free(vars->forks);
-	if (vars->delta)
-		free(vars->delta);
-	vars->delta = NULL;
-	vars->philos = NULL;
-	vars->forks = NULL;
-}
 
 long long	get_time_in_ms(void)
 {

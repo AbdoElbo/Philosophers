@@ -88,3 +88,20 @@ int	error_handle(int argc, char **argv)
 		return (write(2, "Error:\nInt_Overflow.\n", 21), 0);
 	return (1);
 }
+
+void	cleanup(t_args *vars)
+{
+	if (!vars)
+		return ;
+	if (vars->cleanup_flag == 1)
+		end_mutexes(vars);
+	if (vars->philos)
+		free(vars->philos);
+	if (vars->forks)
+		free(vars->forks);
+	if (vars->delta)
+		free(vars->delta);
+	vars->delta = NULL;
+	vars->philos = NULL;
+	vars->forks = NULL;
+}
