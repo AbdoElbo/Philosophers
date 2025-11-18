@@ -19,7 +19,7 @@ void	*monitoring_routine(void *arg)
 
 	vars = (t_args *)arg;
 	while (!(get_long(&vars->set_read_mutex, &vars->threads_ready)))
-		usleep(100);
+		usleep(1);
 	i = 0;
 	while (!(get_long(&vars->set_read_mutex, &vars->death_occured)))
 	{
@@ -27,14 +27,12 @@ void	*monitoring_routine(void *arg)
 		if (i == vars->philos_num)
 			i = 0;
 		vars->delta[i] = (get_time_in_ms() - vars->philos[i].last_meal);
-		// printf(M"%lld delta[%ld] is %lld"RESET "\n",
-		// 	get_time_in_ms() - vars->start_time, i, vars->delta[i]);
 		if (vars->delta[i] >= vars->time_to_die)
 		{
 			set_long(&vars->philo_mutex, &vars->death_occured, 1);
 			pthread_mutex_lock(&vars->printf_mutex);
-			printf(R "%lld %ld died"RESET "\n", get_time_in_ms() - vars->start_time,
-				vars->philos[i].id);
+			printf(R "%lld %ld died"RESET "\n", 
+				get_time_in_ms() - vars->start_time, vars->philos[i].id);
 			pthread_mutex_unlock(&vars->printf_mutex);
 		}
 		pthread_mutex_unlock(&vars->monitor_mutex);
@@ -49,14 +47,17 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philos *)arg;
 	while (!(get_long(&philo->vars->set_read_mutex, &philo->vars->threads_ready)))
-		usleep(100);
+		usleep(1);
 	if (philo->parity == ODD)
 		usleep((philo->vars->time_to_eat * 1000) / 2);
 	while (!(get_long(&philo->vars->philo_mutex, &philo->vars->death_occured)))
 	{
-		philo_eat(philo);
-		philo_sleep(philo);
-		philo_think(philo);
+		if (!(get_long(&philo->vars->philo_mutex, &philo->vars->death_occured)))
+			philo_eat(philo);
+		if (!(get_long(&philo->vars->philo_mutex, &philo->vars->death_occured)))
+			philo_sleep(philo);
+		if (!(get_long(&philo->vars->philo_mutex, &philo->vars->death_occured)))
+			philo_think(philo);
 	}
 	return (NULL);
 }

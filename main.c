@@ -11,27 +11,6 @@
 /* ************************************************************************** */
 
 #include "philos.h"
-
-void	print_status(t_args vars)
-{
-	long	i;
-
-	i = 0;
-	printf("\n");
-	while (i < vars.philos_num)
-	{
-		if (vars.philos[i].parity == ODD)
-			printf("Philo %lu is : ODD\n", i + 1);
-		if (vars.philos[i].parity == EVEN)
-			printf("Philo %lu is : EVEN\n", i + 1);
-		i++;
-	}
-	printf("time to die is %lu\n", vars.time_to_die);
-	printf("time to eat is %lu\n", vars.time_to_eat);
-	printf("time to sleep is %lu\n", vars.time_to_sleep);
-	printf("\n");
-}
-
 int	main(int argc, char **argv)
 {
 	t_args	vars;
@@ -42,7 +21,6 @@ int	main(int argc, char **argv)
 		|| !initialise_vars_3(&vars))
 		return (cleanup(&vars, 0), 1);
 	start_mutexes(&vars);
-	print_status(vars);
 	if (!initialise_threads(&vars, philo_routine, monitoring_routine))
 		return (cleanup(&vars, 1), 1);
 	return (cleanup(&vars, 1), 0);

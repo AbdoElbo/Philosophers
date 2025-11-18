@@ -91,7 +91,6 @@ typedef struct s_args
 	pthread_mutex_t	printf_mutex;
 	pthread_mutex_t	philo_mutex;
 	pthread_mutex_t	monitor_mutex;
-	pthread_mutex_t	dead_mutex;
 	pthread_mutex_t	set_read_mutex;
 	long long		start_time;
 	long long		*delta;

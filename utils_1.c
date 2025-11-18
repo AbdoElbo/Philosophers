@@ -25,7 +25,6 @@ void	start_mutexes(t_args *vars)
 	pthread_mutex_init(&vars->philo_mutex, NULL);
 	pthread_mutex_init(&vars->printf_mutex, NULL);
 	pthread_mutex_init(&vars->monitor_mutex, NULL);
-	pthread_mutex_init(&vars->dead_mutex, NULL);
 	pthread_mutex_init(&vars->set_read_mutex, NULL);
 }
 
@@ -42,7 +41,6 @@ void	end_mutexes(t_args *vars)
 	pthread_mutex_destroy(&vars->printf_mutex);
 	pthread_mutex_destroy(&vars->philo_mutex);
 	pthread_mutex_destroy(&vars->monitor_mutex);
-	pthread_mutex_destroy(&vars->dead_mutex);
 	pthread_mutex_destroy(&vars->set_read_mutex);
 }
 

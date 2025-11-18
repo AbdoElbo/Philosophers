@@ -70,7 +70,7 @@ int	initialise_vars_3(t_args *vars)
 			vars->philos[i].left_fork = &vars->forks[0];
 		else
 			vars->philos[i].left_fork = &vars->forks[i + 1];
-		vars->philos[i].full = false;
+		vars->philos[i].full = 0;
 		vars->philos[i].meal_counter = 0;
 		vars->philos[i].id = i;
 		vars->forks[i].fork_id = i;
