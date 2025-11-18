@@ -75,6 +75,7 @@ typedef struct s_philos
 
 typedef struct s_args
 {
+	int				cleanup_flag;
 	long			philos_num;
 	long			forks_num;
 	long			time_to_die;
@@ -84,7 +85,6 @@ typedef struct s_args
 	long			meals_eaten;
 	long			threads_ready;
 	long			death_occured;
-	long			threads;
 	pthread_t		monitoring;
 	t_forks			*forks;
 	t_philos		*philos;
@@ -115,7 +115,7 @@ int			initialise_threads(t_args *vars, void *(routine)(void *arg),
 void		start_mutexes(t_args *vars);
 void		end_mutexes(t_args *vars);
 
-void		cleanup(t_args *vars, int flag);
+void		cleanup(t_args *vars);
 void		print_status(t_args vars);
 
 void		philo_eat(t_philos *philo);

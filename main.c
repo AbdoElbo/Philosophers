@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philos.h"
+
 int	main(int argc, char **argv)
 {
 	t_args	vars;
@@ -19,9 +20,9 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!initialise_vars_1(&vars, argc, argv) || !initialise_vars_2(&vars)
 		|| !initialise_vars_3(&vars))
-		return (cleanup(&vars, 0), 1);
+		return (cleanup(&vars), 1);
 	start_mutexes(&vars);
 	if (!initialise_threads(&vars, philo_routine, monitoring_routine))
-		return (cleanup(&vars, 1), 1);
-	return (cleanup(&vars, 1), 0);
+		return (cleanup(&vars), 1);
+	return (cleanup(&vars), 0);
 }

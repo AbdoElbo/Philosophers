@@ -26,6 +26,7 @@ void	start_mutexes(t_args *vars)
 	pthread_mutex_init(&vars->printf_mutex, NULL);
 	pthread_mutex_init(&vars->monitor_mutex, NULL);
 	pthread_mutex_init(&vars->set_read_mutex, NULL);
+	vars->cleanup_flag = 1;
 }
 
 void	end_mutexes(t_args *vars)
@@ -43,17 +44,19 @@ void	end_mutexes(t_args *vars)
 	pthread_mutex_destroy(&vars->monitor_mutex);
 	pthread_mutex_destroy(&vars->set_read_mutex);
 }
-
-void	cleanup(t_args *vars, int flag)
+void	cleanup(t_args *vars)
 {
 	if (!vars)
 		return ;
-	if (flag == 1)
+	if (vars->cleanup_flag == 1)
 		end_mutexes(vars);
 	if (vars->philos)
 		free(vars->philos);
 	if (vars->forks)
 		free(vars->forks);
+	if (vars->delta)
+		free(vars->delta);
+	vars->delta = NULL;
 	vars->philos = NULL;
 	vars->forks = NULL;
 }
