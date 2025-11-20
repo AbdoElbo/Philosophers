@@ -30,14 +30,6 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 	vars->death_occured = 0;
 	vars->threads_ready = 0;
 	vars->sim_end = 0;
-	return (1);
-}
-
-int	initialise_vars_2(t_args *vars)
-{
-	long	i;
-
-	i = 0;
 	vars->philos = NULL;
 	vars->forks = NULL;
 	vars->philos = malloc(sizeof(t_philos) * (vars->philos_num));
@@ -46,15 +38,10 @@ int	initialise_vars_2(t_args *vars)
 	vars->forks = malloc(sizeof(t_forks) * vars->forks_num);
 	if (!vars->forks)
 		return (0);
-	vars->delta = malloc(sizeof(long long) * vars->forks_num);
-	if (!vars->delta)
-		return (0);
-	while (i < vars->forks_num)
-		vars->delta[i++] = 0;
 	return (1);
 }
 
-int	initialise_vars_3(t_args *vars)
+int	initialise_vars_2(t_args *vars)
 {
 	long	i;
 
@@ -94,7 +81,7 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 		i++;
 	}
 	vars->start_time = get_time_in_ms();
-	set_long(&vars->set_read_mutex, &vars->threads_ready, 1);
+	set_long(&vars->set_read_mtx, &vars->threads_ready, 1);
 	if (pthread_create(&vars->monitoring, NULL, monitoring_routine, vars))
 		return (cleanup(vars), 0);
 	i = 0;

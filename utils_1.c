@@ -22,10 +22,11 @@ void	start_mutexes(t_args *vars)
 		pthread_mutex_init(&vars->forks[i].fork, NULL);
 		i++;
 	}
-	pthread_mutex_init(&vars->philo_mutex, NULL);
-	pthread_mutex_init(&vars->printf_mutex, NULL);
-	pthread_mutex_init(&vars->monitor_mutex, NULL);
-	pthread_mutex_init(&vars->set_read_mutex, NULL);
+	pthread_mutex_init(&vars->philo_mtx, NULL);
+	pthread_mutex_init(&vars->printf_mtx, NULL);
+	pthread_mutex_init(&vars->monitor_mtx, NULL);
+	pthread_mutex_init(&vars->set_read_mtx, NULL);
+	pthread_mutex_init(&vars->time_mtx, NULL);
 	vars->cleanup_flag = 1;
 }
 
@@ -39,10 +40,11 @@ void	end_mutexes(t_args *vars)
 		pthread_mutex_destroy(&vars->forks[i].fork);
 		i++;
 	}
-	pthread_mutex_destroy(&vars->printf_mutex);
-	pthread_mutex_destroy(&vars->philo_mutex);
-	pthread_mutex_destroy(&vars->monitor_mutex);
-	pthread_mutex_destroy(&vars->set_read_mutex);
+	pthread_mutex_destroy(&vars->printf_mtx);
+	pthread_mutex_destroy(&vars->philo_mtx);
+	pthread_mutex_destroy(&vars->monitor_mtx);
+	pthread_mutex_destroy(&vars->set_read_mtx);
+	pthread_mutex_destroy(&vars->time_mtx);
 }
 
 long long	get_time_in_ms(void)
@@ -53,20 +55,17 @@ long long	get_time_in_ms(void)
 		return (-1);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
-/// @brief safely return the value of dst
-long    get_long(pthread_mutex_t *mutex ,long *dst)
-{
-	long	number;
 
-	pthread_mutex_lock(mutex);
-	number = *dst;
-	pthread_mutex_unlock(mutex);
-	return (number);
-}
-/// @brief safely set "dst" to "Updated" 
-void    set_long(pthread_mutex_t *mutex , long *dst, long updated)
+void	cleanup(t_args *vars)
 {
-	pthread_mutex_lock(mutex);
-	*dst = updated;
-	pthread_mutex_unlock(mutex);
+	if (!vars)
+		return ;
+	if (vars->cleanup_flag == 1)
+		end_mutexes(vars);
+	if (vars->philos)
+		free(vars->philos);
+	if (vars->forks)
+		free(vars->forks);
+	vars->philos = NULL;
+	vars->forks = NULL;
 }

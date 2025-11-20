@@ -51,11 +51,10 @@ typedef struct s_philos
 {
 	t_args			*vars;
 	long			id;
-	long			priority;
 	pthread_t		th;
 	long			full;
 	long			meal_counter;
-	long			last_meal;
+	long long		last_meal;
 	t_forks			*right_fork;
 	t_forks			*left_fork;
 	t_parity		parity;
@@ -75,27 +74,29 @@ typedef struct s_args
 	pthread_t		monitoring;
 	t_forks			*forks;
 	t_philos		*philos;
-	pthread_mutex_t	printf_mutex;
-	pthread_mutex_t	philo_mutex;
-	pthread_mutex_t	monitor_mutex;
-	pthread_mutex_t	set_read_mutex;
+	pthread_mutex_t	printf_mtx;
+	pthread_mutex_t	philo_mtx;
+	pthread_mutex_t	monitor_mtx;
+	pthread_mutex_t	set_read_mtx;
+	pthread_mutex_t	time_mtx;
 	long long		start_time;
-	long long		*delta;
 	int				cleanup_flag;
 }	t_args;
 
 int			error_handle(int argc, char **argv);
 long		ft_atol(const char *str);
 long long	get_time_in_ms(void);
-long    	get_long(pthread_mutex_t *mutex ,long *dst);
-void  		set_long(pthread_mutex_t *mutex , long *dst, long updated);
 void		start_mutexes(t_args *vars);
 void		end_mutexes(t_args *vars);
 void		cleanup(t_args *vars);
 
+long    	get_long(pthread_mutex_t *mutex ,long *dst);
+void    	set_long(pthread_mutex_t *mutex , long *dst, long updated);
+long long    get_long_long(pthread_mutex_t *mutex ,long long *dst);
+void    	set_long_long(pthread_mutex_t *mutex , long long *dst, long long updated);
+
 int			initialise_vars_1(t_args *vars, int argc, char **argv);
 int			initialise_vars_2(t_args *vars);
-int			initialise_vars_3(t_args *vars);
 int			initialise_threads(t_args *vars, void *(routine)(void *arg),
 				void *(monitoring_routine)(void *arg));
 

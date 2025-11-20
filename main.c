@@ -18,8 +18,7 @@ int	main(int argc, char **argv)
 
 	if (!error_handle(argc, argv))
 		return (1);
-	if (!initialise_vars_1(&vars, argc, argv) || !initialise_vars_2(&vars)
-		|| !initialise_vars_3(&vars))
+	if (!initialise_vars_1(&vars, argc, argv) || !initialise_vars_2(&vars))
 		return (cleanup(&vars), 1);
 	start_mutexes(&vars);
 	if (!initialise_threads(&vars, philo_routine, monitoring_routine))

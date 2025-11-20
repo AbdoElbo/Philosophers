@@ -81,27 +81,20 @@ int	is_digit(int argc, char **argv)
 int	error_handle(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
-		return (write(2, "Error:\nnumber of args invalid.\n", 31), 0);
+	{
+		write(2, "Error:\nnumber of args invalid.\n", 31);
+		return (0);
+	}
 	if (!is_digit(argc, argv))
-		return (write(2, "Error:\nNon-Digit or Negative.\n", 30), 0);
-	if (bigger_than_int(argc, argv))
-		return (write(2, "Error:\nInt_Overflow.\n", 21), 0);
-	return (1);
-}
+	{
+		write(2, "Error:\nNon-Digit or Negative.\n", 30);
+		return (0);
 
-void	cleanup(t_args *vars)
-{
-	if (!vars)
-		return ;
-	if (vars->cleanup_flag == 1)
-		end_mutexes(vars);
-	if (vars->philos)
-		free(vars->philos);
-	if (vars->forks)
-		free(vars->forks);
-	if (vars->delta)
-		free(vars->delta);
-	vars->delta = NULL;
-	vars->philos = NULL;
-	vars->forks = NULL;
+	}
+	if (bigger_than_int(argc, argv))
+	{
+		write(2, "Error:\nInt_Overflow.\n", 21);
+		return (0);
+	}
+	return (1);
 }

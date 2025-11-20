@@ -12,7 +12,7 @@
 
 CFLAGS = -Wall -Wextra -Werror -pthread -g
 
-PHILOS_SRCS = main.c error_handle.c initialisation.c utils_1.c routine.c
+PHILOS_SRCS = main.c error_handle.c initialisation.c utils_1.c utils_2.c routine.c
 
 PHILOS_OBJ = $(PHILOS_SRCS:.c=.o)
 
