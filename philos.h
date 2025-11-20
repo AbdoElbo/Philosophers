@@ -71,6 +71,7 @@ typedef struct s_args
 	long			meals_to_eat;
 	long			threads_ready;
 	long			death_occured;
+	long			sim_end;
 	pthread_t		monitoring;
 	t_forks			*forks;
 	t_philos		*philos;

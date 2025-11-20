@@ -29,6 +29,7 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 		vars->meals_to_eat = -1;
 	vars->death_occured = 0;
 	vars->threads_ready = 0;
+	vars->sim_end = 0;
 	return (1);
 }
 
@@ -93,8 +94,6 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 		i++;
 	}
 	vars->start_time = get_time_in_ms();
-	// for (int i = 0; i < vars->philos_num; i++)
-	// 	vars->philos[i].last_meal = vars->start_time;
 	set_long(&vars->set_read_mutex, &vars->threads_ready, 1);
 	if (pthread_create(&vars->monitoring, NULL, monitoring_routine, vars))
 		return (cleanup(vars), 0);
