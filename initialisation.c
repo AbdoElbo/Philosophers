@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/14 19:33:39 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:00:10 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,3 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 		return (cleanup(vars), 0);
 	return (1);
 }
-
-

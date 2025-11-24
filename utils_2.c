@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_1.c                                          :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/14 15:11:26 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/24 12:57:55 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
 /// @brief safely return the value of dst
-long    get_long(pthread_mutex_t *mutex ,long *dst)
+long	get_long(pthread_mutex_t *mutex, long *dst)
 {
 	long	number;
 
@@ -23,8 +23,8 @@ long    get_long(pthread_mutex_t *mutex ,long *dst)
 	return (number);
 }
 
-/// @brief safely set "dst" to "Updated" 
-void    set_long(pthread_mutex_t *mutex , long *dst, long updated)
+/// @brief safely set "dst" to "Updated"
+void	set_long(pthread_mutex_t *mutex, long *dst, long updated)
 {
 	pthread_mutex_lock(mutex);
 	*dst = updated;
@@ -32,7 +32,7 @@ void    set_long(pthread_mutex_t *mutex , long *dst, long updated)
 }
 
 /// @brief safely return the value of dst
-long long    get_long_long(pthread_mutex_t *mutex ,long long *dst)
+long long	get_long_long(pthread_mutex_t *mutex, long long *dst)
 {
 	long long	number;
 
@@ -42,8 +42,8 @@ long long    get_long_long(pthread_mutex_t *mutex ,long long *dst)
 	return (number);
 }
 
-/// @brief safely set "dst" to "Updated" 
-void    set_long_long(pthread_mutex_t *mutex , long long *dst, long long updated)
+/// @brief safely set "dst" to "Updated"
+void	set_long_long(pthread_mutex_t *mutex, long long *dst, long long updated)
 {
 	pthread_mutex_lock(mutex);
 	*dst = updated;

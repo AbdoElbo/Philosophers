@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/11/14 19:37:39 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:01:26 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,11 @@ void		start_mutexes(t_args *vars);
 void		end_mutexes(t_args *vars);
 void		cleanup(t_args *vars);
 
-long    	get_long(pthread_mutex_t *mutex ,long *dst);
-void    	set_long(pthread_mutex_t *mutex , long *dst, long updated);
-long long    get_long_long(pthread_mutex_t *mutex ,long long *dst);
-void    	set_long_long(pthread_mutex_t *mutex , long long *dst, long long updated);
+long		get_long(pthread_mutex_t *mutex, long *dst);
+void		set_long(pthread_mutex_t *mutex, long *dst, long updated);
+long long	get_long_long(pthread_mutex_t *mutex, long long *dst);
+void		set_long_long(pthread_mutex_t *mutex, long long *dst,
+				long long updated);
 
 int			initialise_vars_1(t_args *vars, int argc, char **argv);
 int			initialise_vars_2(t_args *vars);

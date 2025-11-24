@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/14 19:32:59 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/24 12:55:57 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	*monitoring_routine(void *arg)
 		usleep(1);
 	i = 0;
 	while (!(get_long(&vars->set_read_mtx, &vars->death_occured))
-			&& !(get_long(&vars->set_read_mtx, &vars->sim_end)))
+		&& !(get_long(&vars->set_read_mtx, &vars->sim_end)))
 	{
 		if (i == vars->philos_num)
 			i = 0;
-		delta = (get_time_in_ms() - 
-			get_long_long(&vars->time_mtx ,&vars->philos[i].last_meal));
+		delta = (get_time_in_ms()
+				- get_long_long(&vars->time_mtx, &vars->philos[i].last_meal));
 		if (delta >= vars->time_to_die)
 		{
 			set_long(&vars->philo_mtx, &vars->death_occured, 1);
 			pthread_mutex_lock(&vars->printf_mtx);
-			printf(R "%lld %ld died"RESET "\n", 
+			printf(R "%lld %ld died"RESET "\n",
 				get_time_in_ms() - vars->start_time, vars->philos[i].id);
 			pthread_mutex_unlock(&vars->printf_mtx);
 		}
@@ -77,7 +77,7 @@ void	philo_eat(t_philos *philo)
 	printf(G"%lld %ld has taken a fork"RESET "\n",
 		get_time_in_ms() - philo->vars->start_time, philo->id);
 	pthread_mutex_unlock(&philo->vars->printf_mtx);
-	
+
 	pthread_mutex_lock(&philo->left_fork->fork);
 
 	pthread_mutex_lock(&philo->vars->printf_mtx);

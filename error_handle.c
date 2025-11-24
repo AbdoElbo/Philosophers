@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 19:03:13 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/10 14:28:53 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/24 12:59:54 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	error_handle(int argc, char **argv)
 	{
 		write(2, "Error:\nNon-Digit or Negative.\n", 30);
 		return (0);
-
 	}
 	if (bigger_than_int(argc, argv))
 	{
