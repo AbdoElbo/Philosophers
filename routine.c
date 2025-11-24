@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/24 12:55:57 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/24 15:19:09 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	*monitoring_routine(void *arg)
 	vars = (t_args *)arg;
 	while (!(get_long(&vars->set_read_mtx, &vars->threads_ready)))
 		usleep(1);
+	usleep(100);
 	i = 0;
 	while (!(get_long(&vars->set_read_mtx, &vars->death_occured))
 		&& !(get_long(&vars->set_read_mtx, &vars->sim_end)))
@@ -31,10 +32,11 @@ void	*monitoring_routine(void *arg)
 				- get_long_long(&vars->time_mtx, &vars->philos[i].last_meal));
 		if (delta >= vars->time_to_die)
 		{
-			set_long(&vars->philo_mtx, &vars->death_occured, 1);
+			set_long(&vars->set_read_mtx, &vars->death_occured, 1);
 			pthread_mutex_lock(&vars->printf_mtx);
-			printf(R "%lld %ld died"RESET "\n",
-				get_time_in_ms() - vars->start_time, vars->philos[i].id);
+			printf(R "%lld %ld died (delta is %lld)"RESET "\n",
+				get_time_in_ms() - vars->start_time, vars->philos[i].id, delta);
+			printf(R "epoch is %lld"RESET "\n", get_time_in_ms());
 			pthread_mutex_unlock(&vars->printf_mtx);
 		}
 		i++;
@@ -49,9 +51,9 @@ void	*philo_routine(void *arg)
 	ph = (t_philos *)arg;
 	while (!(get_long(&ph->vars->set_read_mtx, &ph->vars->threads_ready)))
 		usleep(1);
-	ph->last_meal = ph->vars->start_time;
+	set_long_long(&ph->vars->time_mtx, &ph->last_meal, ph->vars->start_time);
 	if (ph->parity == ODD)
-		usleep((ph->vars->time_to_eat * 1000) / 2);
+		usleep(ph->vars->time_to_eat * 500);
 	while (!(get_long(&ph->vars->set_read_mtx, &ph->vars->death_occured)))
 	{
 		if (get_long(&ph->vars->set_read_mtx, &ph->vars->meals_to_eat) != ph->meal_counter)
@@ -64,7 +66,7 @@ void	*philo_routine(void *arg)
 				philo_think(ph);
 		}
 		else
-			return (set_long(&ph->vars->philo_mtx, &ph->vars->sim_end, 1), NULL);
+			return (set_long(&ph->vars->set_read_mtx, &ph->vars->sim_end, 1), NULL);
 	}
 	return (NULL);
 }
@@ -90,10 +92,12 @@ void	philo_eat(t_philos *philo)
 		get_time_in_ms() - philo->vars->start_time, philo->id);
 	pthread_mutex_unlock(&philo->vars->printf_mtx);
 
+	set_long_long(&philo->vars->time_mtx, &philo->last_meal,
+		get_time_in_ms() + philo->vars->time_to_eat);
 	usleep(philo->vars->time_to_eat * 1000);
 	pthread_mutex_lock(&philo->vars->philo_mtx);
 	philo->meal_counter++;
-	philo->full = 1;
+	// philo->full = 1;
 	pthread_mutex_unlock(&philo->vars->philo_mtx);
 	set_long_long(&philo->vars->time_mtx, &philo->last_meal, get_time_in_ms());
  //
@@ -116,7 +120,7 @@ void	philo_sleep(t_philos *philo)
 		get_time_in_ms() - philo->vars->start_time, philo->id);
 	pthread_mutex_unlock(&philo->vars->printf_mtx);
 
-	set_long(&philo->vars->philo_mtx, &philo->full, 0);
+	// set_long(&philo->vars->set_read_mtx, &philo->full, 0);
 	usleep(philo->vars->time_to_sleep * 1000);
 }
 
