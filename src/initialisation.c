@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/26 13:58:22 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/26 14:35:00 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	initialise_vars_2(t_args *vars)
 	i = 0;
 	while (i < vars->philos_num)
 	{
-		if ((i + 1) % 2 == 0)
+		if (i % 2 == 0)
 			vars->philos[i].parity = EVEN;
 		else
 			vars->philos[i].parity = ODD;
@@ -80,10 +80,10 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 			return (cleanup(vars), 0);
 		i++;
 	}
-	if (pthread_create(&vars->monitoring, NULL, monitoring_routine, vars))
-		return (cleanup(vars), 0);
 	vars->start_time = get_time_in_ms();
 	set_long(&vars->set_read_mtx, &vars->threads_ready, 1);
+	if (pthread_create(&vars->monitoring, NULL, monitoring_routine, vars))
+		return (cleanup(vars), 0);
 	i = 0;
 	while (i < vars->philos_num)
 	{

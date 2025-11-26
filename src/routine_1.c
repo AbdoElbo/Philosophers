@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/26 13:58:29 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/26 17:02:14 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*monitoring_routine(void *arg)
 	vars = (t_args *)arg;
 	while (!(get_long(&vars->set_read_mtx, &vars->threads_ready)))
 		usleep(1);
-	usleep(100);
+	usleep((vars->time_to_eat * 500) + 100);
 	i = 0;
 	while (!(get_long(&vars->set_read_mtx, &vars->death_occured))
 		&& !(get_long(&vars->set_read_mtx, &vars->sim_end)))
@@ -34,8 +34,8 @@ void	*monitoring_routine(void *arg)
 		{
 			set_long(&vars->set_read_mtx, &vars->death_occured, 1);
 			pthread_mutex_lock(&vars->printf_mtx);
-			printf(R "%lld %ld died (delta is %lld)"RESET "\n",
-				get_time_in_ms() - vars->start_time, vars->philos[i].id, delta);
+			printf(R "%lld %ld died (delta is %lld)"RESET "\n", get_time_in_ms()
+				- vars->start_time, vars->philos[i].id, delta);
 			pthread_mutex_unlock(&vars->printf_mtx);
 		}
 		i++;

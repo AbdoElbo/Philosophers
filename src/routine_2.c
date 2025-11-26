@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 19:02:30 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/26 13:58:31 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/26 16:50:03 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	philo_eat(t_philos *philo)
 		lock_right_fork_first(philo);
 	else
 		lock_left_fork_first(philo);
-
+	
 	pthread_mutex_lock(&philo->vars->printf_mtx);
 	printf(B"%lld %ld is eating"RESET "\n",
 		get_time_in_ms() - philo->vars->start_time, philo->id);
