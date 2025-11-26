@@ -6,11 +6,11 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/25 14:24:49 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:58:29 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philos.h"
+#include "../include/philos.h"
 
 void	*monitoring_routine(void *arg)
 {
@@ -36,7 +36,6 @@ void	*monitoring_routine(void *arg)
 			pthread_mutex_lock(&vars->printf_mtx);
 			printf(R "%lld %ld died (delta is %lld)"RESET "\n",
 				get_time_in_ms() - vars->start_time, vars->philos[i].id, delta);
-			printf(R "epoch is %lld"RESET "\n", get_time_in_ms());
 			pthread_mutex_unlock(&vars->printf_mtx);
 		}
 		i++;
@@ -56,7 +55,8 @@ void	*philo_routine(void *arg)
 		usleep(ph->vars->time_to_eat * 500);
 	while (!(get_long(&ph->vars->set_read_mtx, &ph->vars->death_occured)))
 	{
-		if (get_long(&ph->vars->set_read_mtx, &ph->vars->meals_to_eat) != ph->meal_counter)
+		if (get_long(&ph->vars->set_read_mtx, &ph->vars->meals_to_eat)
+			!= ph->meal_counter)
 		{
 			if (!(get_long(&ph->vars->set_read_mtx, &ph->vars->death_occured)))
 				philo_eat(ph);
@@ -66,7 +66,8 @@ void	*philo_routine(void *arg)
 				philo_think(ph);
 		}
 		else
-			return (set_long(&ph->vars->set_read_mtx, &ph->vars->sim_end, 1), NULL);
+			return (set_long(&ph->vars->set_read_mtx, &ph->vars->sim_end, 1)
+				, NULL);
 	}
 	return (NULL);
 }

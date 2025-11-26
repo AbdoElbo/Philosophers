@@ -6,11 +6,11 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 19:03:13 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/24 12:59:54 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:58:26 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philos.h"
+#include "../include/philos.h"
 
 long	ft_atol(const char *str)
 {

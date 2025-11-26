@@ -6,11 +6,11 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 19:02:30 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/25 14:30:18 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:58:31 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philos.h"
+#include "../include/philos.h"
 
 void	philo_eat(t_philos *philo)
 {
@@ -44,7 +44,7 @@ void	philo_eat(t_philos *philo)
 			get_time_in_ms() - philo->vars->start_time, philo->id);
 		pthread_mutex_unlock(&philo->vars->printf_mtx);
 	}
- // this is for testing meals
+ // this is for testing max meals
 	pthread_mutex_unlock(&philo->right_fork->fork);
 	pthread_mutex_unlock(&philo->left_fork->fork);
 }

@@ -6,11 +6,11 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/25 14:21:45 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:58:22 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philos.h"
+#include "../include/philos.h"
 
 int	initialise_vars_1(t_args *vars, int argc, char **argv)
 {

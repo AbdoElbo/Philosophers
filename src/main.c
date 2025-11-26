@@ -6,11 +6,11 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 18:56:40 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/24 13:00:18 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:58:06 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philos.h"
+#include "../include/philos.h"
 
 int	main(int argc, char **argv)
 {

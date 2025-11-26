@@ -6,16 +6,18 @@
 #    By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 16:20:34 by aelbouaz          #+#    #+#              #
-#    Updated: 2025/11/24 19:04:15 by aelbouaz         ###   ########.fr        #
+#    Updated: 2025/11/26 13:55:37 by aelbouaz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
 
-PHILOS_SRCS = main.c error_handle.c initialisation.c utils_1.c utils_2.c \
-		routine_1.c routine_2.c
+PHILOS_SRCS = src/main.c src/error_handle.c src/initialisation.c \
+		src/utils_1.c src/utils_2.c src/routine_1.c src/routine_2.c
 
 PHILOS_OBJ = $(PHILOS_SRCS:.c=.o)
+
+HEADERS	:= -I ./include
 
 NAME = philo
 
@@ -27,7 +29,7 @@ $(NAME): $(PHILOS_OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(PHILOS_OBJ)
 
 %.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
 	rm -f $(PHILOS_OBJ)

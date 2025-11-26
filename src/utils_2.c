@@ -6,11 +6,11 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/24 12:57:55 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:58:35 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philos.h"
+#include "../include/philos.h"
 
 /// @brief safely return the value of dst
 long	get_long(pthread_mutex_t *mutex, long *dst)
