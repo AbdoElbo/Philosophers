@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/28 10:58:44 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/02 20:07:03 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 	}
 	else
 		vars->meals_to_eat = -1;
-	vars->death_occured = 0;
 	vars->threads_ready = 0;
 	vars->sim_end = 0;
 	vars->philos = NULL;

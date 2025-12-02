@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/12/02 19:55:46 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/02 20:21:01 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_args
 	long			meals_to_eat;
 	long			threads_ready;
 	long			meals_tracker;
-	long			death_occured;
 	long			sim_end;
 	pthread_t		monitoring;
 	t_forks			*forks;
@@ -107,6 +106,7 @@ int			initialise_threads(t_args *vars, void *(routine)(void *arg),
 void		*philo_routine(void *arg);
 void		*monitoring_routine(void *arg);
 
+void		lock_forks(t_philos *philo);
 void		lock_right_fork_first(t_philos *philo);
 void		lock_left_fork_first(t_philos *philo);
 

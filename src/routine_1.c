@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/02 18:51:17 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/02 20:26:35 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	*monitoring_routine(void *arg)
 	{
 		if (i == vars->philos_num)
 			i = 0;
-		if (get_long(&vars->set_read_mtx, &vars->meals_tracker) == vars->philos_num)
+		if (get_long(&vars->set_read_mtx, &vars->meals_tracker)
+			== vars->philos_num)
 			set_long(&vars->set_read_mtx, &vars->sim_end, 1);
 		delta = (get_time_in_ms()
 				- get_long_long(&vars->time_mtx, &vars->philos[i].last_meal));
@@ -35,7 +36,7 @@ void	*monitoring_routine(void *arg)
 		{
 			set_long(&vars->set_read_mtx, &vars->sim_end, 1);
 			pthread_mutex_lock(&vars->printf_mtx);
-			printf( "%lld %ld died (delta is %lld)" "\n", get_time_in_ms()
+			printf("%lld %ld died (delta is %lld)" "\n", get_time_in_ms()
 				- vars->start_time, vars->philos[i].id + 1, delta);
 			pthread_mutex_unlock(&vars->printf_mtx);
 		}
@@ -52,8 +53,6 @@ void	*philo_routine(void *arg)
 	while (!(get_long(&ph->vars->set_read_mtx, &ph->vars->threads_ready)))
 		usleep(150);
 	set_long_long(&ph->vars->time_mtx, &ph->last_meal, ph->vars->start_time);
-	// if (ph->parity == EVEN && ph->id == ph->vars->philos_num - 1)
-	// 	usleep(ph->vars->time_to_eat * 1500);
 	if (ph->parity == ODD)
 		usleep(ph->vars->time_to_eat * 500);
 	while (!(get_long(&ph->vars->set_read_mtx, &ph->vars->sim_end)))

@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/02 19:55:38 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/02 20:27:38 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,3 @@ void	set_long_long(pthread_mutex_t *mutex, long long *dst, long long updated)
 	*dst = updated;
 	pthread_mutex_unlock(mutex);
 }
-
