@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/11/24 19:06:41 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/28 10:58:19 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_args
 	long			time_to_sleep;
 	long			meals_to_eat;
 	long			threads_ready;
+	long			meals_tracker;
 	long			death_occured;
 	long			sim_end;
 	pthread_t		monitoring;

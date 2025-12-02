@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/11/26 14:35:00 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/11/28 10:58:44 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 	vars->sim_end = 0;
 	vars->philos = NULL;
 	vars->forks = NULL;
+	vars->meals_tracker = 0;
 	vars->philos = malloc(sizeof(t_philos) * (vars->philos_num));
 	if (!vars->philos)
 		return (0);
