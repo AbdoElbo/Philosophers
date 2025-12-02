@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/11/28 10:58:19 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:53:23 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,17 @@
 # include <stdbool.h>
 # include <sys/time.h>
 
-# define R "\033[1;31m"
-# define G "\033[1;32m"
-# define Y "\033[1;33m"
-# define B "\033[1;34m"
+# define R "\033[1;31m" // died
+# define G "\033[1;32m" // taken fork
+# define Y "\033[1;33m" // sleeping
+# define B "\033[1;34m" // eating
 # define M "\033[1;35m"
 # define C "\033[1;36m"
-# define W "\033[1;37m"
+# define W "\033[1;37m" // thinking
 # define R "\033[1;31m"
 # define RESET "\033[0m"
+
+// | xclip -selection clipboard
 
 typedef struct s_args	t_args;
 
