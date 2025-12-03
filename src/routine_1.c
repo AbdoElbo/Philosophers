@@ -6,22 +6,35 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/02 20:26:35 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/03 13:40:34 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philos.h"
 
+void	death_checker(t_args *vars, long i)
+{
+	long long	delta;
+
+	delta = (get_time_in_ms()
+			- get_long_long(&vars->time_mtx, &vars->philos[i].last_meal));
+	if (delta >= vars->time_to_die)
+	{
+		set_long(&vars->set_read_mtx, &vars->sim_end, 1);
+		pthread_mutex_lock(&vars->printf_mtx);
+		printf("%lld %ld died (delta is %lld)" "\n", get_time_in_ms()
+			- vars->start_time, vars->philos[i].id + 1, delta);
+		pthread_mutex_unlock(&vars->printf_mtx);
+	}
+}
+
 void	*monitoring_routine(void *arg)
 {
 	t_args		*vars;
-	long long	delta;
 	long		i;
 
 	vars = (t_args *)arg;
-	while (!(get_long(&vars->set_read_mtx, &vars->threads_ready)))
-		usleep(150);
-	usleep((vars->time_to_eat * 1500));
+	usleep((vars->time_to_eat * 1600));
 	i = 0;
 	while (!(get_long(&vars->set_read_mtx, &vars->sim_end)))
 	{
@@ -30,16 +43,7 @@ void	*monitoring_routine(void *arg)
 		if (get_long(&vars->set_read_mtx, &vars->meals_tracker)
 			== vars->philos_num)
 			set_long(&vars->set_read_mtx, &vars->sim_end, 1);
-		delta = (get_time_in_ms()
-				- get_long_long(&vars->time_mtx, &vars->philos[i].last_meal));
-		if (delta >= vars->time_to_die)
-		{
-			set_long(&vars->set_read_mtx, &vars->sim_end, 1);
-			pthread_mutex_lock(&vars->printf_mtx);
-			printf("%lld %ld died (delta is %lld)" "\n", get_time_in_ms()
-				- vars->start_time, vars->philos[i].id + 1, delta);
-			pthread_mutex_unlock(&vars->printf_mtx);
-		}
+		death_checker(vars, i);
 		i++;
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/02 20:07:03 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/03 13:30:57 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 			return (0);
 	}
 	else
-		vars->meals_to_eat = -1;
+		vars->meals_to_eat = -2;
 	vars->threads_ready = 0;
 	vars->sim_end = 0;
 	vars->philos = NULL;
