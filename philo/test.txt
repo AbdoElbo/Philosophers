@@ -1,0 +1,111 @@
+Testing uneven numbers - they shouldn't die
+
+	5 800 200 200 10
+1       Pass    [✓]     5014 5 ATE LAST MEAL
+2       Pass    [✓]     5014 5 is eating
+3       Pass    [✓]     5014 5 ATE LAST MEAL
+4       Pass    [✓]     5014 4 ATE LAST MEAL
+5       Pass    [✓]     5015 5 is eating
+6       Pass    [✓]     5014 3 is eating
+7       Pass    [✓]     5014 3 is eating
+8       Pass    [✓]     5014 3 is eating
+9       Pass    [✓]     5022 1 is eating
+10      Pass    [✓]     5014 1 is eating
+	100 % correct
+____________________________________________
+	5 610 200 200 10
+1       Pass    [✓]     5014 1 is eating
+2       Pass    [✓]     5015 5 is eating
+3       Pass    [✓]     5014 5 ATE LAST MEAL
+4       Pass    [✓]     5014 3 is eating
+5       Pass    [✓]     5014 3 is eating
+6       Pass    [✓]     5014 1 is eating
+7       Pass    [✓]     5014 1 is eating
+8       Pass    [✓]     5014 3 is eating
+9       Pass    [✓]     5015 1 is eating
+10      Pass    [✓]     5014 1 is eating
+	100 % correct
+____________________________________________
+	199 610 200 200 10
+1       Fail    [x]     778 1 died
+2       Pass    [✓]     785 14 is eating
+3       Fail    [x]     610 73 died
+4       Pass    [✓]     629 1 is eating
+5       Fail    [x]     661 67 died
+6       Fail    [x]     708 109 died
+7       Pass    [✓]     812 1 is eating
+8       Fail    [x]     643 175 died
+9       Pass    [✓]     663 199 is eating
+10      Pass    [✓]     642 1 is eating
+	50 % correct
+____________________________________________
+Testing even numbers - they shouldn't die
+	4 410 200 100 10
+1       Pass    [✓]     4077 2 ATE LAST MEAL
+2       Pass    [✓]     4076 2 ATE LAST MEAL
+3       Pass    [✓]     4082 2 ATE LAST MEAL
+4       Pass    [✓]     4075 2 ATE LAST MEAL
+5       Pass    [✓]     4076 4 ATE LAST MEAL
+6       Pass    [✓]     4076 4 ATE LAST MEAL
+7       Pass    [✓]     4076 2 ATE LAST MEAL
+8       Pass    [✓]     4076 2 ATE LAST MEAL
+9       Pass    [✓]     4075 4 ATE LAST MEAL
+10      Pass    [✓]     4076 2 ATE LAST MEAL
+	100 % correct
+____________________________________________
+	4 410 200 200 10
+1       Pass    [✓]     4075 2 ATE LAST MEAL
+2       Pass    [✓]     4076 2 ATE LAST MEAL
+3       Pass    [✓]     4075 4 ATE LAST MEAL
+4       Fail    [x]     611 2 died
+5       Pass    [✓]     4076 4 ATE LAST MEAL
+6       Pass    [✓]     4076 2 ATE LAST MEAL
+7       Pass    [✓]     4076 2 ATE LAST MEAL
+8       Fail    [x]     410 3 died
+9       Pass    [✓]     4076 4 ATE LAST MEAL
+10      Pass    [✓]     4076 3 is thinking
+	80 % correct
+____________________________________________
+	198 610 200 200 10
+1       Fail    [x]     611 175 died
+2       Fail    [x]     743 159 died
+3       Fail    [x]     698 161 died
+4       Pass    [✓]     935 144 is eating
+5       Pass    [✓]     773 117 is eating
+6       Fail    [x]     651 133 died
+7       Fail    [x]     677 189 died
+8       Fail    [x]     756 125 died
+9       Fail    [x]     692 167 died
+10      Fail    [x]     710 189 died
+	20 % correct
+____________________________________________
+	198 800 200 200 10
+1       Fail    [x]     833 73 died
+2       Pass    [✓]     918 27 is eating
+3       Fail    [x]     1127 69 died
+4       Fail    [x]     842 103 died
+5       Fail    [x]     887 195 died
+6       Fail    [x]     952 71 died
+7       Fail    [x]     866 105 died
+8       Pass    [✓]     1155 77 is eating
+9       Fail    [x]     1077 121 died
+10      Fail    [x]     816 61 died
+	20 % correct
+____________________________________________
+Testing uneven numbers - one should die
+	4 310 200 100 10
+1       Pass    [✓]     311 1 died
+2       Pass    [✓]     310 1 died
+3       Pass    [✓]     310 3 died
+4       Pass    [✓]     310 1 died
+5       Pass    [✓]     310 1 died
+6       Pass    [✓]     310 1 died
+7       Pass    [✓]     311 1 died
+8       Pass    [✓]     310 1 died
+9       Pass    [✓]     310 3 died
+10      Pass    [✓]     311 1 died
+	100 % correct
+____________________________________________
+	1 800 200 100 10
+LOADING	
+

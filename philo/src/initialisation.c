@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/03 13:51:19 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:47:39 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ int	initialise_vars_2(t_args *vars)
 	long	i;
 
 	i = 0;
+	// if (vars->philos_num == 1)
+	// {
+	// 	printf("0 1 has taken a fork\n");
+	// 	usleep(vars->time_to_die * 1000);
+	// 	printf("%ld 1 died\n", vars->time_to_die);
+	// 	return (0);
+	// }
 	while (i < vars->philos_num)
 	{
 		if (i % 2 == 0)
@@ -80,9 +87,9 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 		i++;
 	}
 	vars->start_time = get_time_in_ms();
-	set_long(&vars->set_read_mtx, &vars->threads_ready, 1);
 	if (pthread_create(&vars->monitoring, NULL, monitoring_routine, vars))
 		return (cleanup(vars), 0);
+	set_long(&vars->set_read_mtx, &vars->threads_ready, 1);
 	i = 0;
 	while (i < vars->philos_num)
 	{

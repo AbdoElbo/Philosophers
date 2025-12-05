@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/03 13:59:42 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/05 19:10:50 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,19 @@ void	cleanup(t_args *vars)
 		free(vars->forks);
 	vars->philos = NULL;
 	vars->forks = NULL;
+}
+
+void	print_status(t_philos *philo, char *status)
+{
+	long long	current_time;
+
+	if (get_long(&philo->vars->set_read_mtx, &philo->vars->sim_end))
+		return ;
+	pthread_mutex_lock(&philo->vars->printf_mtx);
+	if (!(get_long(&philo->vars->set_read_mtx, &philo->vars->sim_end)))
+	{
+		current_time = get_time_in_ms() - philo->vars->start_time;
+		printf("%lld %ld %s\n", current_time, philo->id + 1, status);
+	}
+	pthread_mutex_unlock(&philo->vars->printf_mtx);
 }

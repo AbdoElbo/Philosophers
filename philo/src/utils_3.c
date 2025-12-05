@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 20:22:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/03 15:06:40 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/05 19:03:34 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,15 @@ void	lock_forks(t_philos *philo)
 void	lock_right_fork_first(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->right_fork->fork);
-	pthread_mutex_lock(&philo->vars->printf_mtx);
-	printf(G"%lld %ld has taken a fork"RESET "\n",
-		get_time_in_ms() - philo->vars->start_time, philo->id + 1);
-	pthread_mutex_unlock(&philo->vars->printf_mtx);
+	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->left_fork->fork);
-	pthread_mutex_lock(&philo->vars->printf_mtx);
-	printf(G"%lld %ld has taken a fork"RESET "\n",
-		get_time_in_ms() - philo->vars->start_time, philo->id + 1);
-	pthread_mutex_unlock(&philo->vars->printf_mtx);
+	print_status(philo, "has taken a fork");
 }
 
 void	lock_left_fork_first(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->fork);
-	pthread_mutex_lock(&philo->vars->printf_mtx);
-	printf(G"%lld %ld has taken a fork"RESET "\n",
-		get_time_in_ms() - philo->vars->start_time, philo->id + 1);
-	pthread_mutex_unlock(&philo->vars->printf_mtx);
+	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->right_fork->fork);
-	pthread_mutex_lock(&philo->vars->printf_mtx);
-	printf(G"%lld %ld has taken a fork"RESET "\n",
-		get_time_in_ms() - philo->vars->start_time, philo->id + 1);
-	pthread_mutex_unlock(&philo->vars->printf_mtx);
+	print_status(philo, "has taken a fork");
 }

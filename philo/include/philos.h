@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/12/03 13:46:53 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/05 19:00:26 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int			initialise_threads(t_args *vars, void *(routine)(void *arg),
 void		*philo_routine(void *arg);
 void		*monitoring_routine(void *arg);
 void		death_checker(t_args *vars, long i);
+void		print_status(t_philos *philo, char *status);
 
 void		lock_forks(t_philos *philo);
 void		lock_right_fork_first(t_philos *philo);

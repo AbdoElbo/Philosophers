@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/03 15:15:05 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/05 19:10:26 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	death_checker(t_args *vars, long i)
 	if (delta >= vars->time_to_die)
 	{
 		set_long(&vars->set_read_mtx, &vars->sim_end, 1);
-		pthread_mutex_lock(&vars->printf_mtx);
-		printf(R "%lld %ld died"RESET "\n", get_time_in_ms()
-			- vars->start_time, vars->philos[i].id + 1);
-		pthread_mutex_unlock(&vars->printf_mtx);
+		print_status(&vars->philos[i], "died");
 	}
 }
 
@@ -34,8 +31,7 @@ void	*monitoring_routine(void *arg)
 	long		i;
 
 	vars = (t_args *)arg;
-	usleep((vars->time_to_eat * 1500));
-	i = 0;
+	usleep((vars->time_to_eat * 1500) + (vars->philos_num * 100));	i = 0;
 	while (!(get_long(&vars->set_read_mtx, &vars->sim_end)))
 	{
 		if (i == vars->philos_num)
@@ -44,6 +40,7 @@ void	*monitoring_routine(void *arg)
 			== vars->philos_num)
 			set_long(&vars->set_read_mtx, &vars->sim_end, 1);
 		death_checker(vars, i);
+		usleep(50);
 		i++;
 	}
 	return (NULL);
@@ -59,6 +56,8 @@ void	*philo_routine(void *arg)
 	set_long_long(&ph->vars->time_mtx, &ph->last_meal, ph->vars->start_time);
 	if (ph->parity == ODD)
 		usleep(ph->vars->time_to_eat * 500);
+	if (ph->parity == EVEN && ph->id == ph->vars->philos_num - 1)
+		usleep(ph->vars->time_to_eat * 1500);
 	while (!(get_long(&ph->vars->set_read_mtx, &ph->vars->sim_end)))
 	{
 		if (get_long(&ph->vars->set_read_mtx, &ph->meal_counter)
