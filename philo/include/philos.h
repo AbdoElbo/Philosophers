@@ -78,6 +78,7 @@ typedef struct s_args
 	pthread_mutex_t	time_mtx;
 	long long		start_time;
 	int				cleanup_flag;
+	bool			color;
 }	t_args;
 
 int			error_handle(int argc, char **argv);
@@ -101,7 +102,7 @@ int			initialise_threads(t_args *vars, void *(routine)(void *arg),
 void		*philo_routine(void *arg);
 void		*monitoring_routine(void *arg);
 void		death_checker(t_args *vars, long i);
-void		print_status(t_philos *philo, char *status);
+void		print_status(t_philos *philo, char *status, const char* color);
 
 void		lock_forks(t_philos *philo);
 void		lock_right_fork_first(t_philos *philo);

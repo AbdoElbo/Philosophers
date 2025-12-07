@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -pthread -g 
 
 PHILOS_SRCS = src/main.c src/error_handle.c src/initialisation.c \
 		src/utils_1.c src/utils_2.c src/utils_3.c src/routine_1.c \

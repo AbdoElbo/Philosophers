@@ -21,6 +21,8 @@ int	main(int argc, char **argv)
 	if (!initialise_vars_1(&vars, argc, argv) || !initialise_vars_2(&vars))
 		return (cleanup(&vars), 1);
 	start_mutexes(&vars);
+	vars.color = true;
+	// vars.color = false;
 	if (!initialise_threads(&vars, philo_routine, monitoring_routine))
 		return (cleanup(&vars), 1);
 	return (cleanup(&vars), 0);

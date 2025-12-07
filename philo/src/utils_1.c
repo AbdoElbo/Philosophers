@@ -67,7 +67,7 @@ void	cleanup(t_args *vars)
 	vars->forks = NULL;
 }
 
-void	print_status(t_philos *philo, char *status)
+void	print_status(t_philos *philo, char *status, const char* color)
 {
 	long long	current_time;
 
@@ -77,7 +77,10 @@ void	print_status(t_philos *philo, char *status)
 	if (!(get_long(&philo->vars->set_read_mtx, &philo->vars->sim_end)))
 	{
 		current_time = get_time_in_ms() - philo->vars->start_time;
-		printf("%lld %ld %s\n", current_time, philo->id + 1, status);
+		if (philo->vars->color == true)
+			printf("%s%lld %ld %s%s\n",color , current_time, philo->id + 1, status, RESET);
+		else
+			printf("%lld %ld %s\n", current_time, philo->id + 1, status);
 	}
 	pthread_mutex_unlock(&philo->vars->printf_mtx);
 }

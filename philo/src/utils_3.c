@@ -28,15 +28,15 @@ void	lock_forks(t_philos *philo)
 void	lock_right_fork_first(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->right_fork->fork);
-	print_status(philo, "has taken a fork");
+	print_status(philo, "has taken a fork", G);
 	pthread_mutex_lock(&philo->left_fork->fork);
-	print_status(philo, "has taken a fork");
+	print_status(philo, "has taken a fork", G);
 }
 
 void	lock_left_fork_first(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->fork);
-	print_status(philo, "has taken a fork");
+	print_status(philo, "has taken a fork", G);
 	pthread_mutex_lock(&philo->right_fork->fork);
-	print_status(philo, "has taken a fork");
+	print_status(philo, "has taken a fork", G);
 }

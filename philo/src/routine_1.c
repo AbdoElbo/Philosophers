@@ -20,8 +20,8 @@ void	death_checker(t_args *vars, long i)
 			- get_long_long(&vars->time_mtx, &vars->philos[i].last_meal));
 	if (delta >= vars->time_to_die)
 	{
+		print_status(&vars->philos[i], "died", R);
 		set_long(&vars->set_read_mtx, &vars->sim_end, 1);
-		print_status(&vars->philos[i], "died");
 	}
 }
 

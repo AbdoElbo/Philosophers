@@ -17,7 +17,7 @@ void	philo_eat(t_philos *philo)
 	if (!(get_long(&philo->vars->set_read_mtx, &philo->vars->sim_end)))
 	{
 		lock_forks(philo);
-		print_status(philo, "is eating");
+		print_status(philo, "is eating", B);
 		set_long_long(&philo->vars->time_mtx, &philo->last_meal,
 			get_time_in_ms());
 		usleep(philo->vars->time_to_eat * 1000);
@@ -40,7 +40,7 @@ void	philo_sleep(t_philos *philo)
 {
 	if (!(get_long(&philo->vars->set_read_mtx, &philo->vars->sim_end)))
 	{
-		print_status(philo, "is sleeping");
+		print_status(philo, "is sleeping", W);
 		usleep(philo->vars->time_to_sleep * 1000);
 	}
 }
@@ -52,7 +52,7 @@ void	philo_think(t_philos *philo)
 
 	if (!(get_long(&philo->vars->set_read_mtx, &philo->vars->sim_end)))
 	{
-		print_status(philo, "is thinking");
+		print_status(philo, "is thinking", Y);
 		margin = (philo->vars->time_to_eat * philo->vars->philos_num * 10);
 		think_time = philo->vars->time_to_eat - philo->vars->time_to_sleep;
 		if (philo->vars->time_to_sleep <= philo->vars->time_to_eat)
