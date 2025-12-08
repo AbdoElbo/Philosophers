@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 19:02:30 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/08 14:55:55 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/08 15:11:20 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	philo_think(t_philos *philo)
 		print_status(philo, "is thinking", Y);
 		think_time = philo->vars->time_to_eat - philo->vars->time_to_sleep;
 		if (philo->vars->time_to_sleep <= philo->vars->time_to_eat)
-			usleep((think_time * 1000) + 1000);
+			usleep((think_time * 1000) + 4000);
 		else
 			usleep(0);
 	}
