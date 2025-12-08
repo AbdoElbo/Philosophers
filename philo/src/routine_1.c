@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/08 14:46:09 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/08 20:52:16 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ void	*monitoring_routine(void *arg)
 			set_long(&vars->set_read_mtx, &vars->sim_end, 1);
 		death_checker(vars, i);
 		usleep(50);
+		if (get_long(&vars->set_read_mtx, &vars->sim_end)
+			&& vars->philos_num == 1)
+			break ;
 		i++;
 	}
 	return (NULL);
@@ -55,10 +58,11 @@ void	*philo_routine(void *arg)
 	while (!(get_long(&ph->vars->set_read_mtx, &ph->vars->threads_ready)))
 		usleep(150);
 	set_long_long(&ph->vars->time_mtx, &ph->last_meal, ph->vars->start_time);
-	if (ph->parity == ODD)
+	if (ph->parity == EVEN)
 		usleep(ph->vars->time_to_eat * 500);
-	if (ph->parity == EVEN && ph->id == ph->vars->philos_num - 1)
-		usleep(ph->vars->time_to_eat * 1500);
+	// if (ph->parity == ODD && ph->id == ph->vars->philos_num - 1)
+	// 	usleep(ph->vars->time_to_eat * 1500);
+	// lines above are just to make the last philo (if odd) start in the third cycle
 	while (!(get_long(&ph->vars->set_read_mtx, &ph->vars->sim_end)))
 	{
 		if (get_long(&ph->vars->set_read_mtx, &ph->meal_counter)

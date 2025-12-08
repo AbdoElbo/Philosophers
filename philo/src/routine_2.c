@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 19:02:30 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/08 15:11:20 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/08 21:17:19 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ void	philo_sleep(t_philos *philo)
 
 void	philo_think(t_philos *philo)
 {
-	// long	margin;
 	long	think_time;
 
 	if (!(get_long(&philo->vars->set_read_mtx, &philo->vars->sim_end)))
 	{
 		print_status(philo, "is thinking", Y);
 		think_time = philo->vars->time_to_eat - philo->vars->time_to_sleep;
+		if (think_time < 0)
+			think_time *= -1;
 		if (philo->vars->time_to_sleep <= philo->vars->time_to_eat)
 			usleep((think_time * 1000) + 4000);
 		else

@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 18:56:40 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/08 19:19:58 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/08 20:42:54 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	if (!initialise_vars_1(&vars, argc, argv) || !initialise_vars_2(&vars))
 		return (cleanup(&vars), 1);
 	start_mutexes(&vars);
-	vars.color = true;
+	vars.color = false;
 	if (!initialise_threads(&vars, philo_routine, monitoring_routine))
 		return (cleanup(&vars), 1);
 	return (cleanup(&vars), 0);

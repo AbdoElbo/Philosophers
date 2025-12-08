@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/08 19:21:20 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/08 20:31:06 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,12 @@ int	initialise_vars_2(t_args *vars)
 	long	i;
 
 	i = 0;
-	// if (vars->philos_num == 1)
-	// {
-	// 	printf(G"0 1 has taken a fork"RESET "\n");
-	// 	usleep(vars->time_to_die * 1000);
-	// 	printf(R "%ld 1 died"RESET "\n", vars->time_to_die);
-	// 	return (0);
-	// }
 	while (i < vars->philos_num)
 	{
 		if (i % 2 == 0)
-			vars->philos[i].parity = EVEN;
-		else
 			vars->philos[i].parity = ODD;
+		else
+			vars->philos[i].parity = EVEN;
 		vars->philos[i].right_fork = &vars->forks[i];
 		if (i == vars->philos_num - 1)
 			vars->philos[i].left_fork = &vars->forks[0];
