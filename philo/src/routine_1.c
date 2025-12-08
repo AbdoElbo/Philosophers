@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/05 19:10:26 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:46:09 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	*monitoring_routine(void *arg)
 	long		i;
 
 	vars = (t_args *)arg;
-	usleep((vars->time_to_eat * 1500) + (vars->philos_num * 100));	i = 0;
+	usleep((vars->time_to_eat * 1500) + (vars->philos_num * 100));
+	i = 0;
 	while (!(get_long(&vars->set_read_mtx, &vars->sim_end)))
 	{
 		if (i == vars->philos_num)

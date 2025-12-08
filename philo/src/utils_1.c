@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/05 19:10:50 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:48:42 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	cleanup(t_args *vars)
 	vars->forks = NULL;
 }
 
-void	print_status(t_philos *philo, char *status, const char* color)
+void	print_status(t_philos *philo, char *status, const char *color)
 {
 	long long	current_time;
 
@@ -78,7 +78,10 @@ void	print_status(t_philos *philo, char *status, const char* color)
 	{
 		current_time = get_time_in_ms() - philo->vars->start_time;
 		if (philo->vars->color == true)
-			printf("%s%lld %ld %s%s\n",color , current_time, philo->id + 1, status, RESET);
+		{
+			printf("%s%lld %ld %s%s\n", color, current_time,
+				philo->id + 1, status, RESET);
+		}
 		else
 			printf("%lld %ld %s\n", current_time, philo->id + 1, status);
 	}
