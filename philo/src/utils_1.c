@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/08 14:48:42 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/09 20:57:34 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,17 @@ void	end_mutexes(t_args *vars)
 	long	i;
 
 	i = 0;
-	while (i < vars->philos_num)
+	if (vars->cleanup_flag == 1)
 	{
-		pthread_mutex_destroy(&vars->forks[i].fork);
-		i++;
+		while (i < vars->philos_num)
+		{
+			pthread_mutex_destroy(&vars->forks[i].fork);
+			i++;
+		}
+		pthread_mutex_destroy(&vars->printf_mtx);
+		pthread_mutex_destroy(&vars->set_read_mtx);
+		pthread_mutex_destroy(&vars->time_mtx);
 	}
-	pthread_mutex_destroy(&vars->printf_mtx);
-	pthread_mutex_destroy(&vars->set_read_mtx);
-	pthread_mutex_destroy(&vars->time_mtx);
 }
 
 /// @brief returns current time in millieseconds
@@ -55,10 +58,12 @@ long long	get_time_in_ms(void)
 
 void	cleanup(t_args *vars)
 {
+	int	i;
+
 	if (!vars)
 		return ;
-	if (vars->cleanup_flag == 1)
-		end_mutexes(vars);
+	i = 0;
+	end_mutexes(vars);
 	if (vars->philos)
 		free(vars->philos);
 	if (vars->forks)

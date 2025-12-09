@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/08 20:31:06 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/09 21:07:09 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 	if (!vars->philos)
 		return (0);
 	vars->forks = malloc(sizeof(t_forks) * vars->forks_num);
-	if (!vars->forks)
+	if (!vars->forks || !vars->philos)
 		return (0);
 	return (1);
 }
@@ -45,6 +45,7 @@ int	initialise_vars_2(t_args *vars)
 {
 	long	i;
 
+	vars->cleanup_flag = 0;
 	i = 0;
 	while (i < vars->philos_num)
 	{
@@ -65,10 +66,10 @@ int	initialise_vars_2(t_args *vars)
 	return (1);
 }
 
-int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
-		, void *(monitoring_routine)(void *arg))
+int	create_philos(t_args *vars, void *(philo_routine)(void *arg))
 {
 	long	i;
+	long	j;
 
 	i = 0;
 	while (i < vars->philos_num)
@@ -76,21 +77,55 @@ int	initialise_threads(t_args *vars, void *(philo_routine)(void *arg)
 		vars->philos[i].vars = vars;
 		if (pthread_create(&vars->philos[i].th, NULL
 				, philo_routine, &vars->philos[i]))
-			return (cleanup(vars), 0);
+		{
+			set_long(&vars->set_read_mtx, &vars->sim_end, 1);
+			j = 0;
+			while (j < i)
+			{
+				if (pthread_join(vars->philos[j].th, NULL))
+					return (write (2, "Failed to join threads.\n", 32), 0);
+				j++;
+			}
+			return (0);
+		}
 		i++;
 	}
+	return (1);
+}
+
+int	create_monitoring(t_args *vars, void *(monitoring_routine)(void *arg))
+{
+	long	j;
+
 	vars->start_time = get_time_in_ms();
 	if (pthread_create(&vars->monitoring, NULL, monitoring_routine, vars))
-		return (cleanup(vars), 0);
+	{
+		set_long(&vars->set_read_mtx, &vars->sim_end, 1);
+		j = 0;
+		while (j < vars->philos_num)
+		{
+			if (pthread_join(vars->philos[j].th, NULL))
+				return (write (2, "Failed to join threads.\n", 32), 0);
+			j++;
+		}
+		return (0);
+	}
 	set_long(&vars->set_read_mtx, &vars->threads_ready, 1);
+	return (1);
+}
+
+int	join_threads(t_args *vars)
+{
+	long	i;
+
 	i = 0;
 	while (i < vars->philos_num)
 	{
 		if (pthread_join(vars->philos[i].th, NULL))
-			return (cleanup(vars), 0);
+			return (write (2, "Failed to join threads.\n", 32), 0);
 		i++;
 	}
 	if (pthread_join(vars->monitoring, NULL))
-		return (cleanup(vars), 0);
+		return (write (2, "Failed to join Monitoring thread.\n", 32), 0);
 	return (1);
 }

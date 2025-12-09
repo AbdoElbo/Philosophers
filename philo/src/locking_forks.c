@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_3.c                                          :+:      :+:    :+:   */
+/*   locking_forks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 20:22:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/08 21:17:31 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/09 21:07:51 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	lock_left_fork_first(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->fork);
 	print_status(philo, "has taken a fork", G);
-	// if (philo->vars->philos_num == 1)
-	// 	return ;
 	pthread_mutex_lock(&philo->right_fork->fork);
 	print_status(philo, "has taken a fork", G);
 }

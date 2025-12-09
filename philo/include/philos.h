@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/12/05 19:00:26 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/09 21:08:26 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,15 @@ void		set_long_long(pthread_mutex_t *mutex, long long *dst,
 
 int			initialise_vars_1(t_args *vars, int argc, char **argv);
 int			initialise_vars_2(t_args *vars);
-int			initialise_threads(t_args *vars, void *(routine)(void *arg),
+int			create_philos(t_args *vars, void *(philo_routine)(void *arg));
+int			create_monitoring(t_args *vars,
 				void *(monitoring_routine)(void *arg));
+int			join_threads(t_args *vars);
 
 void		*philo_routine(void *arg);
 void		*monitoring_routine(void *arg);
 void		death_checker(t_args *vars, long i);
-void		print_status(t_philos *philo, char *status, const char* color);
+void		print_status(t_philos *philo, char *status, const char *color);
 
 void		lock_forks(t_philos *philo);
 void		lock_right_fork_first(t_philos *philo);

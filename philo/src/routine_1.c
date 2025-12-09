@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:43:06 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/08 20:52:16 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/09 21:07:23 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ void	*philo_routine(void *arg)
 	set_long_long(&ph->vars->time_mtx, &ph->last_meal, ph->vars->start_time);
 	if (ph->parity == EVEN)
 		usleep(ph->vars->time_to_eat * 500);
-	// if (ph->parity == ODD && ph->id == ph->vars->philos_num - 1)
-	// 	usleep(ph->vars->time_to_eat * 1500);
-	// lines above are just to make the last philo (if odd) start in the third cycle
 	while (!(get_long(&ph->vars->set_read_mtx, &ph->vars->sim_end)))
 	{
 		if (get_long(&ph->vars->set_read_mtx, &ph->meal_counter)
