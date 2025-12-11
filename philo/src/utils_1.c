@@ -6,26 +6,37 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/09 20:57:34 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:54:02 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philos.h"
 
-void	start_mutexes(t_args *vars)
+int	start_mutexes(t_args *vars)
 {
 	long	i;
 
+	vars->stat_print = 0;
+	vars->stat_set_read = 0;
+	vars->stat_time = 0;
 	i = 0;
 	while (i < vars->philos_num)
 	{
-		pthread_mutex_init(&vars->forks[i].fork, NULL);
+		if (pthread_mutex_init(&vars->forks[i].fork, NULL))
+			return (0);
+		vars->forks[i].ok = 1;
 		i++;
 	}
-	pthread_mutex_init(&vars->printf_mtx, NULL);
-	pthread_mutex_init(&vars->set_read_mtx, NULL);
-	pthread_mutex_init(&vars->time_mtx, NULL);
-	vars->cleanup_flag = 1;
+	if (pthread_mutex_init(&vars->printf_mtx, NULL))
+		return (0);
+	vars->stat_print = 1;
+	if (pthread_mutex_init(&vars->set_read_mtx, NULL))
+		return (0);
+	vars->stat_set_read = 1;
+	if (pthread_mutex_init(&vars->time_mtx, NULL))
+		return (0);
+	vars->stat_time = 1;
+	return (1);
 }
 
 void	end_mutexes(t_args *vars)
@@ -33,17 +44,18 @@ void	end_mutexes(t_args *vars)
 	long	i;
 
 	i = 0;
-	if (vars->cleanup_flag == 1)
+	while (i < vars->philos_num)
 	{
-		while (i < vars->philos_num)
-		{
+		if (vars->forks[i].ok == 1)
 			pthread_mutex_destroy(&vars->forks[i].fork);
-			i++;
-		}
-		pthread_mutex_destroy(&vars->printf_mtx);
-		pthread_mutex_destroy(&vars->set_read_mtx);
-		pthread_mutex_destroy(&vars->time_mtx);
+		i++;
 	}
+	if (vars->stat_print)
+		pthread_mutex_destroy(&vars->printf_mtx);
+	if (vars->stat_set_read)
+		pthread_mutex_destroy(&vars->set_read_mtx);
+	if (vars->stat_time)
+		pthread_mutex_destroy(&vars->time_mtx);
 }
 
 /// @brief returns current time in millieseconds

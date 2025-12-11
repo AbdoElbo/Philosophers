@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:18:55 by gekko             #+#    #+#             */
-/*   Updated: 2025/12/09 21:08:26 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:03:37 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_forks
 {
 	pthread_mutex_t	fork;
 	int				fork_id;
+	int				ok;
 }	t_forks;
 
 typedef struct s_philos
@@ -67,6 +68,9 @@ typedef struct s_args
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			meals_to_eat;
+	long			stat_print;
+	long			stat_set_read;
+	long			stat_time;
 	long			threads_ready;
 	long			meals_tracker;
 	long			sim_end;
@@ -84,7 +88,7 @@ typedef struct s_args
 int			error_handle(int argc, char **argv);
 long		ft_atol(const char *str);
 long long	get_time_in_ms(void);
-void		start_mutexes(t_args *vars);
+int			start_mutexes(t_args *vars);
 void		end_mutexes(t_args *vars);
 void		cleanup(t_args *vars);
 
@@ -113,5 +117,6 @@ void		lock_left_fork_first(t_philos *philo);
 void		philo_eat(t_philos *philo);
 void		philo_sleep(t_philos *philo);
 void		philo_think(t_philos *philo);
+void		handle_one_philo(t_args *vars);
 
 #endif

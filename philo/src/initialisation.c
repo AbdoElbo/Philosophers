@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/09 21:07:09 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/11 19:58:03 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	initialise_vars_2(t_args *vars)
 		vars->philos[i].meal_counter = 0;
 		vars->philos[i].id = i;
 		vars->forks[i].fork_id = i;
+		vars->forks[i].ok = 0;
 		i++;
 	}
 	return (1);
@@ -83,7 +84,7 @@ int	create_philos(t_args *vars, void *(philo_routine)(void *arg))
 			while (j < i)
 			{
 				if (pthread_join(vars->philos[j].th, NULL))
-					return (write (2, "Failed to join threads.\n", 32), 0);
+					return (write (2, "Failed to join threads.\n", 24), 0);
 				j++;
 			}
 			return (0);
@@ -105,7 +106,7 @@ int	create_monitoring(t_args *vars, void *(monitoring_routine)(void *arg))
 		while (j < vars->philos_num)
 		{
 			if (pthread_join(vars->philos[j].th, NULL))
-				return (write (2, "Failed to join threads.\n", 32), 0);
+				return (write (2, "Failed to join threads.\n", 24), 0);
 			j++;
 		}
 		return (0);
@@ -122,10 +123,10 @@ int	join_threads(t_args *vars)
 	while (i < vars->philos_num)
 	{
 		if (pthread_join(vars->philos[i].th, NULL))
-			return (write (2, "Failed to join threads.\n", 32), 0);
+			return (write (2, "Failed to join threads.\n", 24), 0);
 		i++;
 	}
 	if (pthread_join(vars->monitoring, NULL))
-		return (write (2, "Failed to join Monitoring thread.\n", 32), 0);
+		return (write (2, "Failed to join Monitoring thread.\n", 34), 0);
 	return (1);
 }
