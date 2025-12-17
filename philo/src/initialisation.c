@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 19:08:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/11 19:58:03 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:59:26 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 	vars->time_to_eat = ft_atol(argv[3]);
 	vars->time_to_sleep = ft_atol(argv[4]);
 	if (argc == 6)
-	{
 		vars->meals_to_eat = ft_atol(argv[5]);
-		if (vars->meals_to_eat == 0)
-			return (0);
-	}
 	else
 		vars->meals_to_eat = -2;
 	vars->threads_ready = 0;
@@ -37,6 +33,8 @@ int	initialise_vars_1(t_args *vars, int argc, char **argv)
 		return (0);
 	vars->forks = malloc(sizeof(t_forks) * vars->forks_num);
 	if (!vars->forks || !vars->philos)
+		return (0);
+	if (vars->meals_to_eat == 0)
 		return (0);
 	return (1);
 }
@@ -80,6 +78,7 @@ int	create_philos(t_args *vars, void *(philo_routine)(void *arg))
 				, philo_routine, &vars->philos[i]))
 		{
 			set_long(&vars->set_read_mtx, &vars->sim_end, 1);
+			set_long(&vars->set_read_mtx, &vars->threads_ready, 1);
 			j = 0;
 			while (j < i)
 			{
@@ -102,6 +101,7 @@ int	create_monitoring(t_args *vars, void *(monitoring_routine)(void *arg))
 	if (pthread_create(&vars->monitoring, NULL, monitoring_routine, vars))
 	{
 		set_long(&vars->set_read_mtx, &vars->sim_end, 1);
+		set_long(&vars->set_read_mtx, &vars->threads_ready, 1);
 		j = 0;
 		while (j < vars->philos_num)
 		{

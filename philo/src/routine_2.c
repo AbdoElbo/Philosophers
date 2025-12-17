@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 19:02:30 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/11 19:52:32 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:41:04 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	philo_eat(t_philos *philo)
 		!= philo->vars->meals_to_eat + 1)
 	{
 		lock_forks(philo);
+		if (philo->vars->philos_num == 1)
+			return ;
 		print_status(philo, "is eating", B);
 		set_long_long(&philo->vars->time_mtx, &philo->last_meal,
 			get_time_in_ms());
@@ -44,6 +46,8 @@ void	philo_sleep(t_philos *philo)
 		&& get_long(&philo->vars->set_read_mtx, &philo->meal_counter)
 		!= philo->vars->meals_to_eat + 1)
 	{
+		if (philo->vars->philos_num == 1)
+			return ;
 		print_status(philo, "is sleeping", W);
 		usleep(philo->vars->time_to_sleep * 1000);
 	}
@@ -57,6 +61,8 @@ void	philo_think(t_philos *philo)
 		&& get_long(&philo->vars->set_read_mtx, &philo->meal_counter)
 		!= philo->vars->meals_to_eat + 1)
 	{
+		if (philo->vars->philos_num == 1)
+			return ;
 		print_status(philo, "is thinking", Y);
 		think_time = philo->vars->time_to_eat - philo->vars->time_to_sleep;
 		if (think_time >= 0)

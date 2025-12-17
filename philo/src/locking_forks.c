@@ -6,7 +6,7 @@
 /*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 20:22:04 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/11 19:58:33 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:06:26 by aelbouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ void	lock_right_fork_first(t_philos *philo)
 
 void	lock_left_fork_first(t_philos *philo)
 {
+	if (philo->vars->philos_num == 1)
+	{
+		pthread_mutex_lock(&philo->left_fork->fork);
+		print_status(philo, "has taken a fork", G);
+		usleep(philo->vars->time_to_die * 1000);
+		pthread_mutex_unlock(&philo->left_fork->fork);
+		return ;
+	}
 	pthread_mutex_lock(&philo->left_fork->fork);
 	print_status(philo, "has taken a fork", G);
 	pthread_mutex_lock(&philo->right_fork->fork);
