@@ -36,6 +36,8 @@ make
 
 ## 🎨 Debug Mode — Colored Output
 
+![screenshot](screenshot.png)
+
 Following the simulation live in the terminal can get messy fast, especially with a lot of philosophers logging at once. To make debugging easier, this project includes a simple **color toggle**.
 
 In `main.c`, there's a variable called `color`:
