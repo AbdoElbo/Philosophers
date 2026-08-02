@@ -41,12 +41,14 @@ Following the simulation live in the terminal can get messy fast, especially wit
 In `main.c`, there's a variable called `color`:
 
 ```c
-int color = 1; // set to 0 to disable colors, 1 to enable
+vars.color = false; // set to 'false' to disable colors, true to enable
 ```
 
-When `color` is set to `1`, each philosopher's actions (`is thinking`, `is eating`, `is sleeping`, `has taken a fork`, `died`) are printed in a **unique color per philosopher**, making it instantly clear who is doing what without having to trace philosopher IDs through a wall of text.
+When `color` is set to `true`, each philosopher's actions (`is thinking`, `is eating`, `is sleeping`, `has taken a fork`, `died`) are printed in a **unique color**, making it instantly clear who is doing what without having to trace philosopher IDs through a wall of text.
 
-Set it to `0` for standard, uncolored output (useful when piping logs to a file or running automated tests).
+Set it to `false` for standard, uncolored output (useful when piping logs to a file or running automated tests).
+
+Piping the output (e.g. `xclip --selection clipboard`) carries the ANSI color codes with it. This matters because of [philosophers-visualizer](https://nafuka11.github.io/philosophers-visualizer/), a tool that takes the raw, uncolored output of your simulation and turns it into a visual timeline of each philosopher's state. Feed it colored output and it won't parse correctly — so keeping the plain mode around isn't just for logs, it's what makes this visualizer actually usable.
 
 This small addition made debugging race conditions and timing issues significantly easier during development — being able to visually track a single philosopher's state changes across the terminal saved a lot of head-scratching.
 
