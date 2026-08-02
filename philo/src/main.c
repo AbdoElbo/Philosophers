@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gekko <gekko@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 18:56:40 by aelbouaz          #+#    #+#             */
-/*   Updated: 2025/12/16 13:00:18 by aelbouaz         ###   ########.fr       */
+/*   Updated: 2026/08/02 22:49:33 by gekko            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 		return (cleanup(&vars), 1);
 	if (!start_mutexes(&vars))
 		return (cleanup(&vars), 1);
-	vars.color = false;
+	vars.color = true;
 	if (!create_philos(&vars, philo_routine))
 		return (cleanup(&vars), 1);
 	if (!create_monitoring(&vars, monitoring_routine))

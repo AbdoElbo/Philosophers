@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+         #
+#    By: gekko <gekko@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 16:20:34 by aelbouaz          #+#    #+#              #
-#    Updated: 2025/12/16 13:35:23 by aelbouaz         ###   ########.fr        #
+#    Updated: 2026/08/02 22:49:14 by gekko            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -pthread -g
 
 PHILOS_SRCS = src/main.c src/error_handle.c src/initialisation.c \
 		src/utils_1.c src/utils_2.c src/locking_forks.c src/routine_1.c \
